@@ -6,7 +6,7 @@
  */
 const fs = require('fs');
 const path = require('path');
-const blacklist = require('metro-config/src/defaults/blacklist');
+const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
 
 const rnPath = fs.realpathSync(
   path.resolve(require.resolve('react-native/package.json'), '..'),
@@ -15,7 +15,9 @@ const rnwPath = fs.realpathSync(
   path.resolve(require.resolve('react-native-windows/package.json'), '..'),
 );
 
-module.exports = {
+const config = getDefaultConfig(__dirname);
+
+module.exports = mergeConfig(config, {
   resolver: {
     extraNodeModules: {
       // Redirect react-native to react-native-windows
@@ -25,8 +27,7 @@ module.exports = {
     // Include the macos platform in addition to the defaults because the fork includes macos, but doesn't declare it
     platforms: ['ios', 'android', 'windows', 'web', 'macos'],
     // Since there are multiple copies of react-native, we need to ensure that metro only sees one of them
-    // This should go in RN 0.61 when haste is removed
-    blacklistRE: blacklist([
+    blockList: [
       new RegExp(
         `${(path.resolve(rnPath) + path.sep).replace(/[/\\]/g, '/')}.*`,
       ),
@@ -35,7 +36,7 @@ module.exports = {
       new RegExp(
         `${path.resolve(__dirname, 'windows').replace(/[/\\]/g, '/')}.*`,
       ),
-    ]),
+    ],
   },
   transformer: {
     getTransformOptions: async () => ({
@@ -45,4 +46,4 @@ module.exports = {
       },
     }),
   },
-};
+});
