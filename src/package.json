@@ -52,6 +52,15 @@
       "optional": true
     }
   },
+  "codegenConfig": {
+    "name": "RNCCheckboxSpec",
+    "type": "components",
+    "jsSrcsDir": "js",
+    "windows": {
+      "namespace": "RNCCheckboxCodegen",
+      "outputDirectory": "windows/CheckboxWindows/codegen"
+    }
+  },
   "publishConfig": {
     "access": "public"
   },
