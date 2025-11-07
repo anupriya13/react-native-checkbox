@@ -20,9 +20,6 @@ struct Checkbox
   REACT_INIT(Initialize)
   void Initialize(React::ReactContext const &reactContext) noexcept;
 
-  REACT_SYNC_METHOD(multiply)
-  double multiply(double a, double b) noexcept;
-
   // Property setters for RNCCheckboxWindows component
   REACT_METHOD(setDisabled)
   void setDisabled(bool disabled) noexcept;

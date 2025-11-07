@@ -11,10 +11,6 @@ void Checkbox::Initialize(React::ReactContext const &reactContext) noexcept {
   m_context = reactContext;
 }
 
-double Checkbox::multiply(double a, double b) noexcept {
-  return a * b;
-}
-
 // Property setter implementations for RNCCheckboxWindows component
 
 void Checkbox::setDisabled(bool disabled) noexcept {
