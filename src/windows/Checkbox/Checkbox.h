@@ -46,7 +46,7 @@ private:
   React::ReactContext m_context;
 
   // Event emitter for onChange event
-  void emitOnChange(int target, bool value) noexcept;
+  void emitOnChange(double target, bool value) noexcept;
 };
 
 } // namespace winrt::Checkbox
