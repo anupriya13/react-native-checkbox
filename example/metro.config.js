@@ -20,6 +20,12 @@ const rnwPath = fs.realpathSync(
 const config = {
   //
   resolver: {
+    extraNodeModules: {
+      '@react-native-community/checkbox': path.resolve(
+        __dirname,
+        '../src'
+      ),
+    },
     blockList: exclusionList([
       // This stops "npx @react-native-community/cli run-windows" from causing the metro server to crash if its already running
       new RegExp(
@@ -32,6 +38,12 @@ const config = {
     ]),
     //
   },
+  watchFolders: [
+    // This allows us to use the local version of react-native-windows
+    rnwPath,
+    // This allows us to use the local version of @react-native-community/checkbox
+    path.resolve(__dirname, '../src'),
+  ],
   transformer: {
     getTransformOptions: async () => ({
       transform: {

@@ -23,6 +23,8 @@ module.exports = mergeConfig(config, {
       // Redirect react-native to react-native-windows
       'react-native': rnwPath,
       'react-native-windows': rnwPath,
+      // Use local version of checkbox
+      '@react-native-community/checkbox': path.resolve(__dirname, '../src'),
     },
     // Include the macos platform in addition to the defaults because the fork includes macos, but doesn't declare it
     platforms: ['ios', 'android', 'windows', 'web', 'macos'],
@@ -38,6 +40,12 @@ module.exports = mergeConfig(config, {
       ),
     ],
   },
+  watchFolders: [
+    // This allows us to use the local version of react-native-windows
+    rnwPath,
+    // This allows us to use the local version of @react-native-community/checkbox
+    path.resolve(__dirname, '../src'),
+  ],
   transformer: {
     getTransformOptions: async () => ({
       transform: {
