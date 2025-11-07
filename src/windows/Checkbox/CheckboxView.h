@@ -5,6 +5,7 @@
 
 #include "CheckboxView.g.h"
 #include "winrt/Microsoft.ReactNative.h"
+#include <winrt/Windows.UI.Xaml.Controls.h>
 
 namespace winrt::Checkbox::implementation {
     
@@ -12,9 +13,15 @@ namespace winrt::Checkbox::implementation {
     public:
         CheckboxView(Microsoft::ReactNative::IReactContext const& reactContext);
         void UpdateProperties(Microsoft::ReactNative::IJSValueReader const& reader);
+        winrt::Windows::UI::Xaml::FrameworkElement GetView();
+        void SetTag(int64_t tag);
 
     private:
+        void OnValueChanged(bool value);
+        
         Microsoft::ReactNative::IReactContext m_reactContext{ nullptr };
+        winrt::Windows::UI::Xaml::Controls::CheckBox m_checkBox{ nullptr };
+        int64_t m_tag{ 0 };
     };
 }
 
