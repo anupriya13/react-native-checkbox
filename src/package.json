@@ -17,7 +17,9 @@
   "main": "dist/CheckBox",
   "types": "typings/index.d.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "windows": "npx @react-native-community/cli run-windows",
+    "test:windows": "jest --config jest.config.windows.js"
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",
@@ -36,11 +38,13 @@
     "prettier": "^2.0.5",
     "react": "19.1.0",
     "react-native": "0.80.0",
-    "react-native-windows": "0.80.1",
+    "react-native-windows": "0.80.0",
     "react-test-renderer": "16.9.0",
     "ts-jest": "^24.2.0",
     "typescript": "^5.7.0",
-    "xcpretty": "^0.2.8001"
+    "xcpretty": "^0.2.8001",
+    "metro-config": "^0.82.5",
+    "@rnx-kit/jest-preset": "^0.1.17"
   },
   "peerDependencies": {
     "react": "*",
@@ -53,12 +57,13 @@
     }
   },
   "codegenConfig": {
-    "name": "RNCCheckboxSpec",
+    "name": "WindowsCheckBoxComponent",
     "type": "components",
     "jsSrcsDir": "js",
     "windows": {
-      "namespace": "RNCCheckboxCodegen",
-      "outputDirectory": "windows/CheckboxWindows/codegen"
+      "namespace": "CheckboxCodegen",
+      "outputDirectory": "windows/Checkbox/codegen",
+      "separateDataTypes": true
     }
   },
   "publishConfig": {
@@ -82,6 +87,13 @@
       "afterAll": true,
       "jest": true,
       "jasmine": true
+    }
+  },
+  "react-native-windows": {
+    "init-windows": {
+      "name": "Checkbox",
+      "namespace": "Checkbox",
+      "template": "cpp-lib"
     }
   }
 }
