@@ -37,7 +37,7 @@ void Checkbox::setOnFillColor(const std::string& onFillColor) noexcept {
   // TODO: Implement setting on-fill color on the native checkbox control
 }
 
-void Checkbox::emitOnChange(int target, bool value) noexcept {
+void Checkbox::emitOnChange(double target, bool value) noexcept {
   // TODO: Implement emitting onChange event back to JavaScript
   // This should fire the onChange event with the target and value
 }
