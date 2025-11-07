@@ -9,9 +9,9 @@
     "windows": "react-native start --use-react-native-windows --projectRoot ../"
   },
   "dependencies": {
-    "react": "16.11.0",
-    "react-native": "^0.62",
-    "react-native-windows": "^0.62",
+    "react": "19.1.0",
+    "react-native": "0.80.0",
+    "react-native-windows": "0.80.1",
     "@react-native-community/checkbox": "./src"
   }
 }

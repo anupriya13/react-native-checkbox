@@ -55,7 +55,7 @@ function setAndForwardRef({
       forwardedRef(ref);
     } else if (typeof forwardedRef === 'object' && forwardedRef != null) {
       // Handle createRef-based refs
-      forwardedRef = ref;
+      forwardedRef.current = ref;
     }
   };
 }
