@@ -15,4 +15,35 @@ double Checkbox::multiply(double a, double b) noexcept {
   return a * b;
 }
 
+// Property setter implementations for RNCCheckboxWindows component
+
+void Checkbox::setDisabled(bool disabled) noexcept {
+  // TODO: Implement setting disabled state on the native checkbox control
+}
+
+void Checkbox::setValue(bool value) noexcept {
+  // TODO: Implement setting the checked state on the native checkbox control
+}
+
+void Checkbox::setTintColor(std::string tintColor) noexcept {
+  // TODO: Implement setting tint color on the native checkbox control
+}
+
+void Checkbox::setOnCheckColor(std::string onCheckColor) noexcept {
+  // TODO: Implement setting on-check color on the native checkbox control
+}
+
+void Checkbox::setOnTintColor(std::string onTintColor) noexcept {
+  // TODO: Implement setting on-tint color on the native checkbox control
+}
+
+void Checkbox::setOnFillColor(std::string onFillColor) noexcept {
+  // TODO: Implement setting on-fill color on the native checkbox control
+}
+
+void Checkbox::emitOnChange(int target, bool value) noexcept {
+  // TODO: Implement emitting onChange event back to JavaScript
+  // This should fire the onChange event with the target and value
+}
+
 } // namespace winrt::Checkbox

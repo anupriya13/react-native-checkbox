@@ -23,6 +23,29 @@ struct Checkbox
   REACT_SYNC_METHOD(multiply)
   double multiply(double a, double b) noexcept;
 
+  // Property setters for RNCCheckboxWindows component
+  REACT_METHOD(setDisabled)
+  void setDisabled(bool disabled) noexcept;
+
+  REACT_METHOD(setValue)
+  void setValue(bool value) noexcept;
+
+  REACT_METHOD(setTintColor)
+  void setTintColor(std::string tintColor) noexcept;
+
+  REACT_METHOD(setOnCheckColor)
+  void setOnCheckColor(std::string onCheckColor) noexcept;
+
+  REACT_METHOD(setOnTintColor)
+  void setOnTintColor(std::string onTintColor) noexcept;
+
+  REACT_METHOD(setOnFillColor)
+  void setOnFillColor(std::string onFillColor) noexcept;
+
+  // Event emitter for onChange event
+  REACT_METHOD(emitOnChange)
+  void emitOnChange(int target, bool value) noexcept;
+
 private:
   React::ReactContext m_context;
 };
