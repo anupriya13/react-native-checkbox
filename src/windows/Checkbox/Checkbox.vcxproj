@@ -105,9 +105,6 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClInclude Include="Checkbox.h" />
-    <ClInclude Include="CheckboxView.h">
-      <DependentUpon>CheckboxView.idl</DependentUpon>
-    </ClInclude>
     <ClInclude Include="ReactPackageProvider.h">
       <DependentUpon>ReactPackageProvider.idl</DependentUpon>
     </ClInclude>
@@ -117,9 +114,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Checkbox.cpp" />
-    <ClCompile Include="CheckboxView.cpp">
-      <DependentUpon>CheckboxView.idl</DependentUpon>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -129,7 +123,6 @@
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="CheckboxView.idl" />
     <Midl Include="ReactPackageProvider.idl" />
   </ItemGroup>
   <ItemGroup>
