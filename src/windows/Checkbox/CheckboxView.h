@@ -17,8 +17,6 @@ namespace winrt::Checkbox::implementation {
         void SetTag(int64_t tag);
 
     private:
-        void OnValueChanged(bool value);
-        
         Microsoft::ReactNative::IReactContext m_reactContext{ nullptr };
         winrt::Windows::UI::Xaml::Controls::CheckBox m_checkBox{ nullptr };
         int64_t m_tag{ 0 };

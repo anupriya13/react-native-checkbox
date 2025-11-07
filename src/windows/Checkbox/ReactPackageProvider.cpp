@@ -14,32 +14,8 @@ namespace winrt::Checkbox::implementation
 
 void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept
 {
-  // Register the view manager for RNCCheckboxWindows
-  packageBuilder.AddViewManager(
-    L"RNCCheckboxWindows",
-    [](IReactContext context) {
-      return winrt::make<CheckboxViewManager>(context);
-    });
-}
-
-// View Manager implementation
-CheckboxViewManager::CheckboxViewManager(IReactContext const& reactContext)
-  : m_reactContext(reactContext) {
-}
-
-winrt::Windows::UI::Xaml::FrameworkElement CheckboxViewManager::CreateView() {
-  auto view = winrt::make<CheckboxView>(m_reactContext);
-  m_currentView = view;
-  return view.GetView();
-}
-
-void CheckboxViewManager::UpdateProperties(
-  IReactContext const& /*reactContext*/,
-  FrameworkElement const& /*view*/,
-  IJSValueReader const& propertyMapReader) {
-  if (m_currentView) {
-    m_currentView.UpdateProperties(propertyMapReader);
-  }
+  // Add attributed modules and view managers
+  AddAttributedModules(packageBuilder, true);
 }
 
 } // namespace winrt::Checkbox::implementation
