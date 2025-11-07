@@ -5,6 +5,8 @@
 #include "ReactPackageProvider.g.cpp"
 #endif
 
+#include "Checkbox.h"
+
 using namespace winrt::Microsoft::ReactNative;
 
 namespace winrt::Checkbox::implementation
