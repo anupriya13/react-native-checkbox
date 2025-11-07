@@ -31,23 +31,22 @@ struct Checkbox
   void setValue(bool value) noexcept;
 
   REACT_METHOD(setTintColor)
-  void setTintColor(std::string tintColor) noexcept;
+  void setTintColor(const std::string& tintColor) noexcept;
 
   REACT_METHOD(setOnCheckColor)
-  void setOnCheckColor(std::string onCheckColor) noexcept;
+  void setOnCheckColor(const std::string& onCheckColor) noexcept;
 
   REACT_METHOD(setOnTintColor)
-  void setOnTintColor(std::string onTintColor) noexcept;
+  void setOnTintColor(const std::string& onTintColor) noexcept;
 
   REACT_METHOD(setOnFillColor)
-  void setOnFillColor(std::string onFillColor) noexcept;
-
-  // Event emitter for onChange event
-  REACT_METHOD(emitOnChange)
-  void emitOnChange(int target, bool value) noexcept;
+  void setOnFillColor(const std::string& onFillColor) noexcept;
 
 private:
   React::ReactContext m_context;
+
+  // Event emitter for onChange event
+  void emitOnChange(int target, bool value) noexcept;
 };
 
 } // namespace winrt::Checkbox

@@ -25,19 +25,19 @@ void Checkbox::setValue(bool value) noexcept {
   // TODO: Implement setting the checked state on the native checkbox control
 }
 
-void Checkbox::setTintColor(std::string tintColor) noexcept {
+void Checkbox::setTintColor(const std::string& tintColor) noexcept {
   // TODO: Implement setting tint color on the native checkbox control
 }
 
-void Checkbox::setOnCheckColor(std::string onCheckColor) noexcept {
+void Checkbox::setOnCheckColor(const std::string& onCheckColor) noexcept {
   // TODO: Implement setting on-check color on the native checkbox control
 }
 
-void Checkbox::setOnTintColor(std::string onTintColor) noexcept {
+void Checkbox::setOnTintColor(const std::string& onTintColor) noexcept {
   // TODO: Implement setting on-tint color on the native checkbox control
 }
 
-void Checkbox::setOnFillColor(std::string onFillColor) noexcept {
+void Checkbox::setOnFillColor(const std::string& onFillColor) noexcept {
   // TODO: Implement setting on-fill color on the native checkbox control
 }
 
