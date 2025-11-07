@@ -1666,7 +1666,7 @@
 "@react-native-community/checkbox@./src":
   resolved "file:example/src"
 
-"@react-native-community/checkbox@file:C:\\Users\\anuverma\\Desktop\\GitHub\\react-native-checkbox\\src":
+"@react-native-community/checkbox@file:/home/runner/work/react-native-checkbox/react-native-checkbox/src":
   version "0.5.20"
   resolved "file:src"
 
@@ -3997,7 +3997,7 @@ event-target-shim@^5.0.0, event-target-shim@^5.0.1:
   resolved "https://registry.npmjs.org/event-target-shim/-/event-target-shim-5.0.1.tgz"
   integrity sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==
 
-"example@file:C:\\Users\\anuverma\\Desktop\\GitHub\\react-native-checkbox\\example":
+"example@file:/home/runner/work/react-native-checkbox/react-native-checkbox/example":
   version "0.0.1"
   resolved "file:example"
   dependencies:
