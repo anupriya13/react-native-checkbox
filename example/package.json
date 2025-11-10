@@ -3,17 +3,33 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ../node_modules/react-native/local-cli/cli.js start",
+    "start": "react-native start --client-logs",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "windows": "npx @react-native-community/cli run-windows",
+    "test": "jest",
+    "lint": "eslint .",
     "test:windows": "jest --config jest.config.windows.js"
   },
   "dependencies": {
     "react": "19.1.0",
     "react-native": "0.80.0",
-    "react-native-windows": "0.80.0",
-    "@react-native-community/checkbox": "./src"
+    "@react-native-community/checkbox": "file:../src",
+    "react-native-windows": "0.80.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/runtime": "^7.26.0",
+    "@react-native/babel-preset": "0.80.0",
+    "@react-native/metro-config": "0.80.0",
+    "@react-native-community/eslint-config": "^3.2.0",
+    "babel-jest": "^29.7.0",
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "react-test-renderer": "19.1.0"
+  },
+  "jest": {
+    "preset": "react-native"
   },
   "react-native-windows": {
     "init-windows": {
@@ -21,8 +37,5 @@
       "name": "CheckboxExample",
       "namespace": "CheckboxExample"
     }
-  },
-  "devDependencies": {
-    "@rnx-kit/jest-preset": "^0.1.17"
   }
 }
