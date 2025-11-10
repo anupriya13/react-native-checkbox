@@ -18,6 +18,7 @@ const instructions = Platform.select({
 });
 
 const isIOS = Platform.OS === 'ios';
+console.log('App.tsx Platform.OS:', Platform.OS);
 
 type Props = {};
 type State = {

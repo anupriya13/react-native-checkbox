@@ -3,7 +3,8 @@ const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
 const fs = require('fs');
 const path = require('path');
 const exclusionList = require('metro-config/src/defaults/exclusionList');
-
+const monorepoRoot = path.resolve(__dirname, '..');
+const librarySrc = path.resolve(monorepoRoot, 'src');
 const rnwPath = fs.realpathSync(
   path.resolve(require.resolve('react-native-windows/package.json'), '..'),
 );
@@ -25,20 +26,20 @@ const config = {
         __dirname,
         '../src'
       ),
+      '@babel/runtime': path.resolve(__dirname, '../node_modules/@babel/runtime'),
     },
     blockList: exclusionList([
-      // This stops "npx @react-native-community/cli run-windows" from causing the metro server to crash if its already running
-      new RegExp(
-        `${path.resolve(__dirname, 'windows').replace(/[/\\]/g, '/')}.*`,
-      ),
-      // This prevents "npx @react-native-community/cli run-windows" from hitting: EBUSY: resource busy or locked, open msbuild.ProjectImports.zip or other files produced by msbuild
-      new RegExp(`${rnwPath}/build/.*`),
-      new RegExp(`${rnwPath}/target/.*`),
+      // Prevent Metro from watching Windows build artifacts
+      new RegExp(`${path.resolve(__dirname, 'windows').replace(/[/\\]/g, '/')}.*`),
+      new RegExp(`${rnwPath.replace(/[/\\]/g, '/')}/build/.*`),
+      new RegExp(`${rnwPath.replace(/[/\\]/g, '/')}/target/.*`),
       /.*\.ProjectImports\.zip/,
     ]),
     //
   },
   watchFolders: [
+    monorepoRoot,
+    librarySrc,
     // This allows us to use the local version of react-native-windows
     rnwPath,
     // This allows us to use the local version of @react-native-community/checkbox
