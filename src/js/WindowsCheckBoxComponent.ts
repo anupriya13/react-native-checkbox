@@ -22,6 +22,4 @@ export interface NativeProps extends ViewProps {
   onChange?: BubblingEventHandler<CheckBoxEvent>;
 }
 
-export default codegenNativeComponent<NativeProps>(
-  'RNCCheckboxWindows',
-) as HostComponent<NativeProps>;
+export default codegenNativeComponent<NativeProps>('Checkbox') as HostComponent<NativeProps>;
