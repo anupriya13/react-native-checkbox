@@ -15,7 +15,7 @@
     "react": "19.1.0",
     "react-native": "0.80.0",
     "@react-native-community/checkbox": "file:../src",
-    "react-native-windows": "0.80.0"
+    "react-native-windows": "file:C:/Users/anuverma/Desktop/GitHub/react-native-windows/vnext"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
