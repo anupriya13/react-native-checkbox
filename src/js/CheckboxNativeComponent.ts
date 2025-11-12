@@ -8,7 +8,6 @@ import type {BubblingEventHandler} from 'react-native/Libraries/Types/CodegenTyp
 import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
 
 type CheckBoxEvent = Readonly<{
-  target: number;
   value: boolean;
 }>;
 

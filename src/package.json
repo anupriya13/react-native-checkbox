@@ -58,12 +58,17 @@
   },
   "codegenConfig": {
     "name": "WindowsCheckBoxComponent",
-    "type": "components",
+    "type": "all",
     "jsSrcsDir": "js",
+    "includesGeneratedCode": true,
     "windows": {
       "namespace": "CheckboxCodegen",
       "outputDirectory": "windows/Checkbox/codegen",
-      "separateDataTypes": true
+      "separateDataTypes": true,
+      "generators": [
+        "modulesWindows",
+        "componentsWindows"
+      ]
     }
   },
   "publishConfig": {
