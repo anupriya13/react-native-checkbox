@@ -29,6 +29,7 @@
 #include <winrt/Microsoft.UI.Xaml.Hosting.h>
 #include <winrt/Microsoft.UI.Content.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
+#include <winrt/Microsoft.ReactNative.Xaml.h>
 #include <winrt/Windows.UI.h>
 
 // Composition and Numerics
