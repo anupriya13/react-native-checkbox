@@ -3,14 +3,12 @@ module.exports = {
   dependency: {
     platforms: {
       windows: {
-        sourceDir: 'windows/Checkbox',
+        sourceDir: 'windows',
         solutionFile: 'Checkbox.sln',
-        projects: [
-          {
-            projectFile: 'Checkbox\\Checkbox.vcxproj',
-            directDependency: true,
-          },
-        ],
+        projects: [{
+          projectFile: 'Checkbox\\Checkbox.vcxproj',
+          directDependency: true,
+        }],
       },
     },
   },
