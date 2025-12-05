@@ -21,6 +21,21 @@
 #include <CppWinRTIncludes.h>
 #include <winrt/Microsoft.ReactNative.h>
 
+// XAML Headers
+#include <winrt/Microsoft.UI.Xaml.h>
+#include <winrt/Microsoft.UI.Xaml.Controls.h>
+#include <winrt/Microsoft.UI.Xaml.Controls.Primitives.h>
+#include <winrt/Microsoft.UI.Xaml.Media.h>
+#include <winrt/Microsoft.UI.Xaml.Hosting.h>
+#include <winrt/Microsoft.UI.Content.h>
+#include <winrt/Microsoft.ReactNative.Composition.h>
+#include <winrt/Microsoft.ReactNative.Xaml.h>
+#include <winrt/Windows.UI.h>
+
+// Composition and Numerics
+#include <winrt/Microsoft.UI.Composition.h>
+#include <winrt/Windows.Foundation.Numerics.h>
+
 // C RunTime Header Files
 #include <malloc.h>
 #include <memory.h>

@@ -17,7 +17,7 @@ import {
   NativeMethods,
   NativeSyntheticEvent,
 } from 'react-native';
-import WindowsCheckBoxNativeComponent from './WindowsCheckBoxComponent';
+import WindowsCheckBoxNativeComponent from './CheckboxNativeComponent';
 // @ts-ignore setAndForwardRef type does not exist in @types/react-native
 import setAndForwardRef from './setAndForwardRef';
 

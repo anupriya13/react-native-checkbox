@@ -5,7 +5,7 @@
 #include "ReactPackageProvider.g.cpp"
 #endif
 
-#include "Checkbox.h"
+#include "CheckboxView.h"
 
 using namespace winrt::Microsoft::ReactNative;
 
@@ -14,8 +14,9 @@ namespace winrt::Checkbox::implementation
 
 void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept
 {
-  // Add attributed modules and view managers
   AddAttributedModules(packageBuilder, true);
+  // Register our Checkbox component (new architecture)
+  RegisterCheckboxComponentView(packageBuilder);
 }
 
 } // namespace winrt::Checkbox::implementation
