@@ -7,7 +7,7 @@ Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "CheckboxExample.Package", "
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CheckboxExample", "CheckboxExample\CheckboxExample.vcxproj", "{687B3158-22F6-49EC-B394-4E9BB81F4506}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Checkbox", "..\..\src\windows\Checkbox\Checkbox.vcxproj", "{C11CCEDE-33B9-47AD-AAD4-447924A81ED2}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Checkbox", "..\node_modules\@react-native-community\checkbox\windows\Checkbox\Checkbox.vcxproj", "{C11CCEDE-33B9-47AD-AAD4-447924A81ED2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

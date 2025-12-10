@@ -22,6 +22,11 @@
     <UseExperimentalNuget>true</UseExperimentalNuget>
 
     <ReactExperimentalFeaturesSet>true</ReactExperimentalFeaturesSet>
+    
+    <!--
+      Enable native ViewConfig interop for new architecture compatibility
+    -->
+    <UseViewConfigInterop>true</UseViewConfigInterop>
   </PropertyGroup>
 
 </Project>
