@@ -9,6 +9,7 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Button} from 'react-native';
 
 import CheckBox from '@react-native-community/checkbox';
+import NativeCheckboxModule from '@react-native-community/checkbox/dist/NativeCheckboxModule';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -28,6 +29,7 @@ type State = {
   value3: boolean;
   value4: boolean;
   lineWidth: number;
+  multiplyResult: number | null;
 };
 
 export default class App extends Component<Props, State> {
@@ -41,8 +43,23 @@ export default class App extends Component<Props, State> {
       value3: false,
       value4: false,
       lineWidth: 10,
+      multiplyResult: null,
     };
   }
+
+  testMultiply = async () => {
+    if (NativeCheckboxModule) {
+      try {
+        const result = await NativeCheckboxModule.multiply(3, 7);
+        this.setState({ multiplyResult: result });
+        console.log('Multiply result:', result);
+      } catch (error) {
+        console.error('Multiply error:', error);
+      }
+    } else {
+      console.log('NativeCheckboxModule is not available');
+    }
+  };
 
   renderForIOS() {
     return (
@@ -148,6 +165,17 @@ export default class App extends Component<Props, State> {
   renderForWindows() {
     return (
       <View style={styles.container}>
+        <Text style={styles.sectionTitle}>TurboModule Test</Text>
+        <Button
+          onPress={this.testMultiply}
+          title="Test multiply(3, 7)"
+        />
+        {this.state.multiplyResult !== null && (
+          <Text style={styles.result}>Result: {this.state.multiplyResult}</Text>
+        )}
+        
+        <Text style={styles.sectionTitle}>Checkbox Tests</Text>
+        
         <Text>Disabled checkbox</Text>
         <CheckBox value={true} disabled={true} />
         <Text>{`[value: ${this.state.value0}]`}</Text>
@@ -219,5 +247,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  result: {
+    fontSize: 16,
+    color: 'green',
+    marginTop: 10,
   },
 });
