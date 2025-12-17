@@ -17,15 +17,7 @@ import {
   NativeMethods,
   NativeSyntheticEvent,
 } from 'react-native';
-
-// Lazy load the native component to avoid early view config resolution
-let WindowsCheckBoxNativeComponent: any = null;
-function getWindowsCheckBoxNativeComponent() {
-  if (WindowsCheckBoxNativeComponent === null) {
-    WindowsCheckBoxNativeComponent = require('./CheckboxNativeComponent').default;
-  }
-  return WindowsCheckBoxNativeComponent;
-}
+import RNCCheckboxNativeComponent from './RNCCheckboxNativeComponent';
 
 // @ts-ignore setAndForwardRef type does not exist in @types/react-native
 import setAndForwardRef from './setAndForwardRef';
@@ -107,9 +99,8 @@ class CheckBox extends React.Component<Props> {
     // Do not use onValueChange directly from props
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {style, onValueChange, ...props} = this.props;
-    const WindowsCheckBox = getWindowsCheckBoxNativeComponent();
     return (
-      <WindowsCheckBox
+      <RNCCheckboxNativeComponent
         {...props}
         // @ts-ignore TODO: implement the type of WindowsCheckBoxNativeComponent
         style={[styles.rctCheckBox, style]}

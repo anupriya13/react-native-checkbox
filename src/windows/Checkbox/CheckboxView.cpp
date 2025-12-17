@@ -1,179 +1,178 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 #include "pch.h"
-
-// XAML-backed implementation when Microsoft.UI.Xaml is available
-#if defined(RNW_NEW_ARCH) && __has_include(<winrt/Microsoft.UI.Xaml.h>) && __has_include(<winrt/Microsoft.UI.Xaml.Controls.h>)
-
 #include "CheckboxView.h"
-
-#if __has_include(<winrt/Microsoft.ReactNative.Composition.Experimental.h>)
-#include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
-#endif
-
-using namespace winrt;
-using namespace winrt::Microsoft::ReactNative;
-using namespace winrt::Microsoft::ReactNative::Composition;
-using namespace winrt::Microsoft::ReactNative::Composition::Experimental;
-using namespace winrt::Microsoft::UI::Composition;
-using namespace winrt::Microsoft::UI::Xaml;
-using namespace winrt::Microsoft::UI::Xaml::Controls;
-using namespace winrt::Microsoft::UI::Xaml::Media;
-using namespace winrt::Windows::Foundation;
-namespace WUC = winrt::Windows::UI;
+#include <limits>
 
 namespace winrt::Checkbox::implementation {
 
-CheckboxComponentViewXaml::CheckboxComponentViewXaml() {
-  m_checkbox = CheckBox();
-  m_checkbox.Checked([weakThis = get_weak()](auto const &sender, auto const &e) {
-    if (auto strongThis = weakThis.get()) {
-      strongThis->OnCheckedChanged(sender, e);
+#ifdef RNW_NEW_ARCH
+
+    RNCCheckboxComponentView::RNCCheckboxComponentView() {
+        m_checkBox = winrt::Microsoft::UI::Xaml::Controls::CheckBox();
+        
+        // Subscribe to Checked/Unchecked events
+        m_checkedToken = m_checkBox.Checked([weakThis = get_weak()](auto const& sender, auto const& e) {
+            if (auto strongThis = weakThis.get()) {
+                strongThis->OnCheckedChanged(sender, e);
+            }
+        });
+        
+        m_uncheckedToken = m_checkBox.Unchecked([weakThis = get_weak()](auto const& sender, auto const& e) {
+            if (auto strongThis = weakThis.get()) {
+                strongThis->OnCheckedChanged(sender, e);
+            }
+        });
     }
-  });
-  m_checkbox.Unchecked([weakThis = get_weak()](auto const &sender, auto const &e) {
-    if (auto strongThis = weakThis.get()) {
-      strongThis->OnCheckedChanged(sender, e);
+
+    RNCCheckboxComponentView::~RNCCheckboxComponentView() {
+        if (m_checkBox) {
+            m_checkBox.Checked(m_checkedToken);
+            m_checkBox.Unchecked(m_uncheckedToken);
+        }
     }
-  });
-}
 
-UIElement CheckboxComponentViewXaml::GetXamlElement() {
-  return m_checkbox;
-}
+#endif // RNW_NEW_ARCH
 
-void CheckboxComponentViewXaml::InitializeContentIsland(
-    const Composition::ContentIslandComponentView &islandView) noexcept {
-  // Ensure XAML application is created. If RNW's XamlApplication helper is
-  // available use it, otherwise skip - the host should initialize XAML.
-#if __has_include(<winrt/Microsoft.ReactNative.Xaml.h>)
-  XamlApplication::EnsureCreated();
-#endif
-  m_xamlIsland = XamlIsland{};
-  m_xamlIsland.Content(m_checkbox);
-  islandView.Connect(m_xamlIsland.ContentIsland());
-}
+    void RegisterCheckboxComponentView(
+        winrt::Microsoft::ReactNative::IReactPackageBuilder const& packageBuilder) noexcept {
+#ifdef RNW_NEW_ARCH
+        CheckboxCodegen::RegisterCheckboxNativeComponent<winrt::Checkbox::implementation::RNCCheckboxComponentView>(
+            packageBuilder,
+            [](const winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder& builder) {
+                builder.as<winrt::Microsoft::ReactNative::IReactViewComponentBuilder>().XamlSupport(true);
+                // Use SetContentIslandComponentViewInitializer
+                builder.SetContentIslandComponentViewInitializer(
+                    [](const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView& islandView) noexcept {
+                        auto userData = winrt::make_self<winrt::Checkbox::implementation::RNCCheckboxComponentView>();
+                        userData->InitializeContentIsland(islandView);
+                        islandView.UserData(*userData);
+                    });
+                // Set up initial state with zero size
+                builder.as<winrt::Microsoft::ReactNative::IReactViewComponentBuilder>().SetInitialStateDataFactory(
+                    [](const winrt::Microsoft::ReactNative::IComponentProps& /*props*/) noexcept {
+                        return winrt::make<RNCCheckboxStateData>(winrt::Windows::Foundation::Size{ 0, 0 });
+                    });
 
-void CheckboxComponentViewXaml::Initialize(const Microsoft::ReactNative::ComponentView & /*view*/) noexcept {}
+                // Register the measure function - reads from state
+                builder.as<winrt::Microsoft::ReactNative::IReactViewComponentBuilder>().SetMeasureContentHandler(
+                    [](winrt::Microsoft::ReactNative::ShadowNode const& shadowNode,
+                        winrt::Microsoft::ReactNative::LayoutContext const&,
+                        winrt::Microsoft::ReactNative::LayoutConstraints const&) noexcept {
 
-void CheckboxComponentViewXaml::UpdateProps(
-    const Microsoft::ReactNative::ComponentView & /*view*/,
-    const winrt::com_ptr<CheckboxCodegen::CheckboxProps> &newProps,
-    const winrt::com_ptr<CheckboxCodegen::CheckboxProps> &oldProps) noexcept {
-  if (!newProps) return;
-  m_updating = true;
-  if (!oldProps || newProps->value != oldProps->value) {
-    m_checkbox.IsChecked(newProps->value);
-  }
-  if (!oldProps || newProps->disabled != oldProps->disabled) {
-    m_checkbox.IsEnabled(!newProps->disabled);
-  }
-  m_updating = false;
-}
+                            auto currentState = winrt::get_self<RNCCheckboxStateData>(shadowNode.StateData());
 
-void CheckboxComponentViewXaml::UpdateEventEmitter(
-    const std::shared_ptr<CheckboxCodegen::CheckboxEventEmitter> &eventEmitter) noexcept {
-  BaseCheckbox::UpdateEventEmitter(eventEmitter);
-}
+                            if (currentState && currentState->desiredSize.Width > 0) {
+                                // Return the measured size from state
+                                return currentState->desiredSize;
+                            }
 
-void CheckboxComponentViewXaml::OnCheckedChanged(IInspectable const & /*sender*/, RoutedEventArgs const & /*e*/) {
-  if (m_updating) return;
-  if (auto eventEmitter = EventEmitter()) {
-    CheckboxCodegen::CheckboxEventEmitter::OnChange args;
-    args.value = m_checkbox.IsChecked().GetBoolean();
-    eventEmitter->onChange(args);
-  }
-}
+                            // Return a default size if we don't have a measurement yet
+                            return winrt::Windows::Foundation::Size{ 32, 32 };
+                    });
 
-WUC::Color CheckboxComponentViewXaml::ConvertColor(const Microsoft::ReactNative::Color &color) {
-  return color.AsWindowsColor(nullptr);
-}
-
-void RegisterCheckboxComponentView(IReactPackageBuilder const &packageBuilder) noexcept {
-  // Register the XAML-backed view when composition builder is available
-#if __has_include(<winrt/Microsoft.ReactNative.Composition.h>)
-  CheckboxCodegen::RegisterCheckboxNativeComponent<CheckboxComponentViewXaml>(
-      packageBuilder,
-      [](const Composition::IReactCompositionViewComponentBuilder &builder) {
-        builder.SetContentIslandComponentViewInitializer(
-            [](const Composition::ContentIslandComponentView &islandView) noexcept {
-              auto userData = winrt::make_self<CheckboxComponentViewXaml>();
-              userData->InitializeContentIsland(islandView);
-              islandView.UserData(*userData);
+                // Handle state updates
+                builder.as<winrt::Microsoft::ReactNative::IReactViewComponentBuilder>().SetUpdateStateHandler(
+                    [](const winrt::Microsoft::ReactNative::ComponentView& view,
+                        const winrt::Microsoft::ReactNative::IComponentState& newState) {
+                            auto islandView = view.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>();
+                            auto userData = islandView.UserData().as<winrt::Checkbox::implementation::RNCCheckboxComponentView>();
+                            userData->UpdateState(view, newState);
+                    });
             });
-      });
 #endif
-}
+    }
 
-} // namespace winrt::Checkbox::implementation
+#ifdef RNW_NEW_ARCH
+    void RNCCheckboxComponentView::InitializeContentIsland(
+        const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView& islandView) {
+        // Configure CheckBox
+        m_checkBox.HorizontalAlignment(winrt::Microsoft::UI::Xaml::HorizontalAlignment::Left);
+        m_checkBox.VerticalAlignment(winrt::Microsoft::UI::Xaml::VerticalAlignment::Center);
 
-#elif defined(RNW_NEW_ARCH) && __has_include(<winrt/Microsoft.ReactNative.Composition.h>)
-
-// Composition-only fallback implementation
-#include "CheckboxView.h"
-
-using namespace winrt;
-using namespace winrt::Microsoft::ReactNative;
-using namespace winrt::Microsoft::ReactNative::Composition;
-using namespace winrt::Microsoft::UI::Composition;
-
-namespace winrt::Checkbox::implementation {
-
-CheckboxComponentViewSimple::CheckboxComponentViewSimple() {}
-
-void CheckboxComponentViewSimple::Initialize(const Microsoft::ReactNative::ComponentView & /*view*/) noexcept {}
-
-void CheckboxComponentViewSimple::UpdateProps(
-    const Microsoft::ReactNative::ComponentView & /*view*/,
-    const winrt::com_ptr<CheckboxCodegen::CheckboxProps> &newProps,
-    const winrt::com_ptr<CheckboxCodegen::CheckboxProps> & /*oldProps*/) noexcept {
-  if (!newProps) return;
-  m_updating = true;
-  m_updating = false;
-}
-
-void CheckboxComponentViewSimple::UpdateEventEmitter(const std::shared_ptr<CheckboxCodegen::CheckboxEventEmitter> &eventEmitter) noexcept {
-  BaseCheckbox::UpdateEventEmitter(eventEmitter);
-}
-
-Visual CheckboxComponentViewSimple::CreateVisual(const Microsoft::ReactNative::ComponentView &view) noexcept {
-  auto compView = view.as<winrt::Microsoft::ReactNative::Composition::ComponentView>();
-  auto compositor = compView.Compositor();
-  auto visual = compositor.CreateContainerVisual();
-  auto sprite = compositor.CreateSpriteVisual();
-  sprite.Size({20.0f, 20.0f});
-  auto brush = compositor.CreateColorBrush({0.8f, 0.8f, 0.8f, 1.0f});
-  sprite.Brush(brush);
-  visual.Children().InsertAtTop(sprite);
-  return visual;
-}
-
-void RegisterCheckboxComponentView(IReactPackageBuilder const &packageBuilder) noexcept {
-  packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddViewComponent(
-      L"Checkbox", [](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
-        auto compBuilder = builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
-
-        builder.SetCreateProps([](winrt::Microsoft::ReactNative::ViewProps props,
-                              const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom) noexcept {
-            return winrt::make<CheckboxCodegen::CheckboxProps>(props, cloneFrom); 
+        // Listen for size changes on the checkbox
+        m_checkBox.SizeChanged([this](auto const& /*sender*/, auto const& /*args*/) {
+            RefreshSize();
         });
 
-        compBuilder.SetViewComponentViewInitializer([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
-          auto userData = winrt::make_self<CheckboxComponentViewSimple>();
-          if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&CheckboxComponentViewSimple::Initialize != &CheckboxCodegen::BaseCheckbox<CheckboxComponentViewSimple>::Initialize) {
-            userData->Initialize(view);
-          }
-          view.UserData(*userData);
+        m_island = winrt::Microsoft::UI::Xaml::XamlIsland{};
+        m_island.Content(m_checkBox);
+        islandView.Connect(m_island.ContentIsland());
+        m_islandView = winrt::make_weak(islandView);
+    }
+
+    void RNCCheckboxComponentView::UpdateProps(
+        const winrt::Microsoft::ReactNative::ComponentView& view,
+        const winrt::com_ptr<CheckboxCodegen::CheckboxProps>& newProps,
+        const winrt::com_ptr<CheckboxCodegen::CheckboxProps>& oldProps) noexcept {
+        BaseCheckbox::UpdateProps(view, newProps, oldProps);
+
+        if (!m_checkBox) {
+            return;
+        }
+
+        m_updating = true;
+
+        // Update value (checked state)
+        if (newProps->value.has_value()) {
+            m_checkBox.IsChecked(newProps->value.value());
+        }
+
+        // Update disabled state
+        if (newProps->disabled.has_value()) {
+            m_checkBox.IsEnabled(!newProps->disabled.value());
+        }
+
+        m_updating = false;
+
+        RefreshSize();
+    }
+
+    // Measure checkbox and update state if needed.
+    void RNCCheckboxComponentView::RefreshSize() {
+        if (!m_checkBox) {
+            return;
+        }
+
+        m_checkBox.Measure(winrt::Windows::Foundation::Size{
+            std::numeric_limits<float>::infinity(),
+            std::numeric_limits<float>::infinity()
         });
-      });
-}
+
+        auto desiredSize = m_checkBox.DesiredSize();
+
+        if (m_state) {
+            auto currentState = winrt::get_self<RNCCheckboxStateData>(m_state.Data());
+            if (desiredSize != currentState->desiredSize) {
+                m_state.UpdateStateWithMutation([desiredSize](winrt::Windows::Foundation::IInspectable /*data*/) {
+                    return winrt::make<RNCCheckboxStateData>(desiredSize);
+                });
+            }
+        }
+    }
+
+    void RNCCheckboxComponentView::UpdateState(
+        const winrt::Microsoft::ReactNative::ComponentView& /*view*/,
+        const winrt::Microsoft::ReactNative::IComponentState& newState) noexcept {
+        m_state = newState;
+    }
+
+    void RNCCheckboxComponentView::OnCheckedChanged(
+        winrt::Windows::Foundation::IInspectable const& /*sender*/,
+        winrt::Microsoft::UI::Xaml::RoutedEventArgs const& /*e*/) {
+        
+        if (m_updating) {
+            return;
+        }
+
+        if (auto eventEmitter = EventEmitter()) {
+            CheckboxCodegen::CheckboxEventEmitter::OnChange args;
+            args.value = m_checkBox.IsChecked().GetBoolean();
+            eventEmitter->onChange(args);
+        }
+    }
+
+#endif // defined(RNW_NEW_ARCH)
 
 } // namespace winrt::Checkbox::implementation
-
-#else
-
-// RNW new-arch not available or no compatible headers; provide a no-op
-#include "CheckboxView.h"
-namespace winrt::Checkbox::implementation {
-inline void RegisterCheckboxComponentView(IReactPackageBuilder const & /*packageBuilder*/) noexcept {}
-}
-
-#endif

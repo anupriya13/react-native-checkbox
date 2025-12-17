@@ -1,41 +1,28 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ *
+ * @format
+ */
 
 'use strict';
 
-import type {ViewProps, ColorValue, HostComponent} from 'react-native';
-import type {BubblingEventHandler} from 'react-native/Libraries/Types/CodegenTypes';
+import type {HostComponent} from 'react-native';
 import {Platform} from 'react-native';
-import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
+import type {RNCCheckboxNativeProps} from './RNCCheckboxNativeComponent';
 
-type CheckBoxEvent = Readonly<{
-  value: boolean;
-}>;
+// Re-export the native props type
+export type {RNCCheckboxNativeProps as NativeProps};
 
-export interface NativeProps extends ViewProps {
-  disabled?: boolean;
-  value?: boolean;
-  tintColor?: ColorValue;
-  onCheckColor?: ColorValue;
-  onTintColor?: ColorValue;
-  onFillColor?: ColorValue;
-  onChange?: BubblingEventHandler<CheckBoxEvent>;
-}
+let CheckboxNativeComponent: HostComponent<RNCCheckboxNativeProps>;
 
-let CheckboxNativeComponent: HostComponent<NativeProps>;
-
-// Windows uses requireNativeComponent with static view config
 if (Platform.OS === 'windows') {
-  // @ts-ignore requireNativeComponent typing
-  const {requireNativeComponent} = require('react-native');
-  // Provide a static view config to avoid dynamic lookup in new architecture
-  CheckboxNativeComponent = requireNativeComponent('Checkbox', {
-    nativeOnly: {
-      onChange: true,
-    }
-  });
+  // Use the Windows-specific native component with codegen
+  CheckboxNativeComponent = require('./RNCCheckboxNativeComponent').default;
+} else if (Platform.OS === 'android') {
+  CheckboxNativeComponent = require('./AndroidCheckBoxNativeComponent').default;
 } else {
-  CheckboxNativeComponent = codegenNativeComponent<NativeProps>('WindowsCheckBoxComponent') as HostComponent<NativeProps>;
+  CheckboxNativeComponent = require('./IOSCheckBoxNativeComponent').default;
 }
 
 export default CheckboxNativeComponent;
