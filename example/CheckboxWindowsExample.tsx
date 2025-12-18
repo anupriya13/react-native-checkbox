@@ -201,9 +201,13 @@ const styles = StyleSheet.create({
     color: '#666',
     marginBottom: 12,
   },
+  checkboxContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   checkbox: {
-    width: 32,
-    height: 32,
+    width: 20,
+    height: 20,
   },
   checkboxRow: {
     flexDirection: 'row',
@@ -212,7 +216,8 @@ const styles = StyleSheet.create({
   },
   checkboxLabel: {
     fontSize: 14,
-    marginLeft: 10,
+    paddingBottom: 8,
+    marginLeft: 8,
     color: '#333',
   },
   resultBox: {
