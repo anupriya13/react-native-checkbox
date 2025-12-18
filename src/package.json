@@ -59,13 +59,13 @@
   "codegenConfig": {
     "name": "RNCCheckboxSpec",
     "type": "all",
-    "jsSrcsDir": "js",
-    "includesGeneratedCode": true,
+    "jsSrcsDir": "specs",
     "windows": {
       "namespace": "CheckboxCodegen",
       "outputDirectory": "windows/Checkbox/codegen",
       "separateDataTypes": true,
-      "generators": ["modulesWindows", "componentsWindows"]
+      "modulesWindows": true,
+      "componentsWindows": true
     }
   },
 

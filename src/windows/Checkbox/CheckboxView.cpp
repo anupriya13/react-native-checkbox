@@ -38,7 +38,7 @@ namespace winrt::Checkbox::implementation {
     void RegisterCheckboxComponentView(
         winrt::Microsoft::ReactNative::IReactPackageBuilder const& packageBuilder) noexcept {
 #ifdef RNW_NEW_ARCH
-        CheckboxCodegen::RegisterCheckboxNativeComponent<winrt::Checkbox::implementation::RNCCheckboxComponentView>(
+        CheckboxCodegen::RegisterRNCCheckboxNativeComponent<winrt::Checkbox::implementation::RNCCheckboxComponentView>(
             packageBuilder,
             [](const winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder& builder) {
                 builder.as<winrt::Microsoft::ReactNative::IReactViewComponentBuilder>().XamlSupport(true);
@@ -104,9 +104,9 @@ namespace winrt::Checkbox::implementation {
 
     void RNCCheckboxComponentView::UpdateProps(
         const winrt::Microsoft::ReactNative::ComponentView& view,
-        const winrt::com_ptr<CheckboxCodegen::CheckboxProps>& newProps,
-        const winrt::com_ptr<CheckboxCodegen::CheckboxProps>& oldProps) noexcept {
-        BaseCheckbox::UpdateProps(view, newProps, oldProps);
+        const winrt::com_ptr<CheckboxCodegen::RNCCheckboxProps>& newProps,
+        const winrt::com_ptr<CheckboxCodegen::RNCCheckboxProps>& oldProps) noexcept {
+        BaseRNCCheckbox::UpdateProps(view, newProps, oldProps);
 
         if (!m_checkBox) {
             return;
@@ -167,7 +167,7 @@ namespace winrt::Checkbox::implementation {
         }
 
         if (auto eventEmitter = EventEmitter()) {
-            CheckboxCodegen::CheckboxEventEmitter::OnChange args;
+            CheckboxCodegen::RNCCheckboxEventEmitter::OnChange args;
             args.value = m_checkBox.IsChecked().GetBoolean();
             eventEmitter->onChange(args);
         }

@@ -7,7 +7,7 @@
 
 #ifdef RNW_NEW_ARCH
 
-#include "codegen_manual/react/components/RNCCheckboxSpec/Checkbox.g.h"
+#include "codegen_manual/react/components/RNCCheckboxSpec/RNCCheckbox.g.h"
 
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
@@ -25,7 +25,7 @@ namespace winrt::Checkbox::implementation {
     };
 
     struct RNCCheckboxComponentView : winrt::implements<RNCCheckboxComponentView, winrt::IInspectable>,
-        CheckboxCodegen::BaseCheckbox<RNCCheckboxComponentView> {
+        CheckboxCodegen::BaseRNCCheckbox<RNCCheckboxComponentView> {
         RNCCheckboxComponentView();
         ~RNCCheckboxComponentView();
 
@@ -34,8 +34,8 @@ namespace winrt::Checkbox::implementation {
 
         void UpdateProps(
             const winrt::Microsoft::ReactNative::ComponentView& view,
-            const winrt::com_ptr<CheckboxCodegen::CheckboxProps>& newProps,
-            const winrt::com_ptr<CheckboxCodegen::CheckboxProps>& oldProps) noexcept override;
+            const winrt::com_ptr<CheckboxCodegen::RNCCheckboxProps>& newProps,
+            const winrt::com_ptr<CheckboxCodegen::RNCCheckboxProps>& oldProps) noexcept override;
 
         void UpdateState(
             const winrt::Microsoft::ReactNative::ComponentView& view,

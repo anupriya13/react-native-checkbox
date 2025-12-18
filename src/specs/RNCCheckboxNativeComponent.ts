@@ -9,8 +9,8 @@
 
 import type {ViewProps, ColorValue, HostComponent} from 'react-native';
 import type {
-  BubblingEventHandler,
   WithDefault,
+  BubblingEventHandler,
 } from 'react-native/Libraries/Types/CodegenTypes';
 import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
 
@@ -57,7 +57,5 @@ export interface RNCCheckboxNativeProps extends ViewProps {
   onChange?: BubblingEventHandler<CheckBoxChangeEvent>;
 }
 
-export default codegenNativeComponent<RNCCheckboxNativeProps>(
-  'Checkbox',
-  {}
-) as HostComponent<RNCCheckboxNativeProps>;
+export default codegenNativeComponent<RNCCheckboxNativeProps>('RNCCheckbox') as HostComponent<RNCCheckboxNativeProps>;
+

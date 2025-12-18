@@ -15,4 +15,4 @@ export interface Spec extends TurboModule {
   multiply(a: number, b: number): Promise<number>;
 }
 
-export default TurboModuleRegistry.get<Spec>('RNCCheckbox') as Spec | null;
+export default TurboModuleRegistry.get<Spec>('Checkbox') as Spec | null;

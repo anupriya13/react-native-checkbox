@@ -163,6 +163,7 @@ export default class App extends Component<Props, State> {
   }
 
   renderForWindows() {
+    console.log('Rendering for Windows');
     return (
       <View style={styles.container}>
         <Text style={styles.sectionTitle}>TurboModule Test</Text>

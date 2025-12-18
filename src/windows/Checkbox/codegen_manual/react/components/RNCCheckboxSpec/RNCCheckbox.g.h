@@ -1,6 +1,6 @@
 
 /*
- * This file is auto-generated from CheckboxNativeComponent spec file in flow / TypeScript.
+ * This file is auto-generated from RNCCheckboxNativeComponent spec file in flow / TypeScript.
  */
 // clang-format off
 #pragma once
@@ -18,13 +18,13 @@
 
 namespace CheckboxCodegen {
 
-REACT_STRUCT(CheckboxProps)
-struct CheckboxProps : winrt::implements<CheckboxProps, winrt::Microsoft::ReactNative::IComponentProps> {
-  CheckboxProps(winrt::Microsoft::ReactNative::ViewProps props, const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom)
+REACT_STRUCT(RNCCheckboxProps)
+struct RNCCheckboxProps : winrt::implements<RNCCheckboxProps, winrt::Microsoft::ReactNative::IComponentProps> {
+  RNCCheckboxProps(winrt::Microsoft::ReactNative::ViewProps props, const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom)
     : ViewProps(props)
   {
      if (cloneFrom) {
-       auto cloneFromProps = cloneFrom.as<CheckboxProps>();
+       auto cloneFromProps = cloneFrom.as<RNCCheckboxProps>();
        disabled = cloneFromProps->disabled;
        value = cloneFromProps->value;
        tintColor = cloneFromProps->tintColor;
@@ -59,17 +59,17 @@ struct CheckboxProps : winrt::implements<CheckboxProps, winrt::Microsoft::ReactN
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };
 
-REACT_STRUCT(Checkbox_OnChange)
-struct Checkbox_OnChange {
+REACT_STRUCT(RNCCheckbox_OnChange)
+struct RNCCheckbox_OnChange {
   REACT_FIELD(value)
   bool value{};
 };
 
-struct CheckboxEventEmitter {
-  CheckboxEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
+struct RNCCheckboxEventEmitter {
+  RNCCheckboxEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
       : m_eventEmitter(eventEmitter) {}
 
-  using OnChange = Checkbox_OnChange;
+  using OnChange = RNCCheckbox_OnChange;
 
   void onChange(OnChange &value) const {
     m_eventEmitter.DispatchEvent(L"change", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
@@ -82,12 +82,12 @@ struct CheckboxEventEmitter {
 };
 
 template<typename TUserData>
-struct BaseCheckbox {
+struct BaseRNCCheckbox {
 
   virtual void UpdateProps(
     const winrt::Microsoft::ReactNative::ComponentView &/*view*/,
-    const winrt::com_ptr<CheckboxProps> &newProps,
-    const winrt::com_ptr<CheckboxProps> &/*oldProps*/) noexcept {
+    const winrt::com_ptr<RNCCheckboxProps> &newProps,
+    const winrt::com_ptr<RNCCheckboxProps> &/*oldProps*/) noexcept {
     m_props = newProps;
   }
 
@@ -104,7 +104,7 @@ struct BaseCheckbox {
     const winrt::Microsoft::ReactNative::IComponentState &/*newState*/) noexcept {
   }
 
-  virtual void UpdateEventEmitter(const std::shared_ptr<CheckboxEventEmitter> &eventEmitter) noexcept {
+  virtual void UpdateEventEmitter(const std::shared_ptr<RNCCheckboxEventEmitter> &eventEmitter) noexcept {
     m_eventEmitter = eventEmitter;
   }
 
@@ -134,32 +134,32 @@ struct BaseCheckbox {
 
   
 
-  const std::shared_ptr<CheckboxEventEmitter>& EventEmitter() const { return m_eventEmitter; }
-  const winrt::com_ptr<CheckboxProps>& Props() const { return m_props; }
+  const std::shared_ptr<RNCCheckboxEventEmitter>& EventEmitter() const { return m_eventEmitter; }
+  const winrt::com_ptr<RNCCheckboxProps>& Props() const { return m_props; }
 
 private:
-  winrt::com_ptr<CheckboxProps> m_props;
-  std::shared_ptr<CheckboxEventEmitter> m_eventEmitter;
+  winrt::com_ptr<RNCCheckboxProps> m_props;
+  std::shared_ptr<RNCCheckboxEventEmitter> m_eventEmitter;
 };
 
 template <typename TUserData>
-void RegisterCheckboxNativeComponent(
+void RegisterRNCCheckboxNativeComponent(
     winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder,
     std::function<void(const winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder&)> builderCallback) noexcept {
   packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddViewComponent(
-      L"Checkbox", [builderCallback](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
+      L"RNCCheckbox", [builderCallback](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
         auto compBuilder = builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
 
         builder.SetCreateProps([](winrt::Microsoft::ReactNative::ViewProps props,
                               const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom) noexcept {
-            return winrt::make<CheckboxProps>(props, cloneFrom); 
+            return winrt::make<RNCCheckboxProps>(props, cloneFrom); 
         });
 
         builder.SetUpdatePropsHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::IComponentProps &newProps,
                                      const winrt::Microsoft::ReactNative::IComponentProps &oldProps) noexcept {
             auto userData = view.UserData().as<TUserData>();
-            userData->UpdateProps(view, newProps ? newProps.as<CheckboxProps>() : nullptr, oldProps ? oldProps.as<CheckboxProps>() : nullptr);
+            userData->UpdateProps(view, newProps ? newProps.as<RNCCheckboxProps>() : nullptr, oldProps ? oldProps.as<RNCCheckboxProps>() : nullptr);
         });
 
         compBuilder.SetUpdateLayoutMetricsHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
@@ -172,10 +172,10 @@ void RegisterCheckboxNativeComponent(
         builder.SetUpdateEventEmitterHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter) noexcept {
           auto userData = view.UserData().as<TUserData>();
-          userData->UpdateEventEmitter(std::make_shared<CheckboxEventEmitter>(eventEmitter));
+          userData->UpdateEventEmitter(std::make_shared<RNCCheckboxEventEmitter>(eventEmitter));
         });
 
-        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::FinalizeUpdate != &BaseCheckbox<TUserData>::FinalizeUpdate) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::FinalizeUpdate != &BaseRNCCheckbox<TUserData>::FinalizeUpdate) {
             builder.SetFinalizeUpdateHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      winrt::Microsoft::ReactNative::ComponentViewUpdateMask mask) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -183,7 +183,7 @@ void RegisterCheckboxNativeComponent(
           });
         } 
 
-        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::UpdateState != &BaseCheckbox<TUserData>::UpdateState) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::UpdateState != &BaseRNCCheckbox<TUserData>::UpdateState) {
           builder.SetUpdateStateHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::IComponentState &newState) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -191,7 +191,7 @@ void RegisterCheckboxNativeComponent(
           });
         }
 
-        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::MountChildComponentView != &BaseCheckbox<TUserData>::MountChildComponentView) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::MountChildComponentView != &BaseRNCCheckbox<TUserData>::MountChildComponentView) {
           builder.SetMountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                       const winrt::Microsoft::ReactNative::MountChildComponentViewArgs &args) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -199,7 +199,7 @@ void RegisterCheckboxNativeComponent(
           });
         }
 
-        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::UnmountChildComponentView != &BaseCheckbox<TUserData>::UnmountChildComponentView) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::UnmountChildComponentView != &BaseRNCCheckbox<TUserData>::UnmountChildComponentView) {
           builder.SetUnmountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                       const winrt::Microsoft::ReactNative::UnmountChildComponentViewArgs &args) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -209,13 +209,13 @@ void RegisterCheckboxNativeComponent(
 
         compBuilder.SetViewComponentViewInitializer([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
           auto userData = winrt::make_self<TUserData>();
-          if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::Initialize != &BaseCheckbox<TUserData>::Initialize) {
+          if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::Initialize != &BaseRNCCheckbox<TUserData>::Initialize) {
             userData->Initialize(view);
           }
           view.UserData(*userData);
         });
 
-        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::CreateVisual != &BaseCheckbox<TUserData>::CreateVisual) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::CreateVisual != &BaseRNCCheckbox<TUserData>::CreateVisual) {
           compBuilder.SetCreateVisualHandler([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
             auto userData = view.UserData().as<TUserData>();
             return userData->CreateVisual(view);
