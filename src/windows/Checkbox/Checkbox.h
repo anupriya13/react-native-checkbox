@@ -9,7 +9,7 @@
 
 namespace winrt::Checkbox::implementation {
 
-REACT_MODULE(CheckboxModule, L"RNCCheckbox")
+REACT_MODULE(CheckboxModule, L"Checkbox")
 struct CheckboxModule {
   using ModuleSpec = CheckboxCodegen::CheckboxModuleSpec;
 

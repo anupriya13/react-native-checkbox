@@ -6,10 +6,17 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Button} from 'react-native';
+import {Platform, StyleSheet, Text, View, Button, ScrollView} from 'react-native';
 
-import CheckBox from '@react-native-community/checkbox';
-import NativeCheckboxModule from '@react-native-community/checkbox/dist/NativeCheckboxModule';
+// Platform-specific imports
+let CheckBox: any;
+let CheckboxWindowsExamples: any[] = [];
+
+if (Platform.OS === 'windows') {
+  CheckboxWindowsExamples = require('./CheckboxWindowsExample').examples;
+} else {
+  CheckBox = require('@react-native-community/checkbox').default;
+}
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -19,6 +26,7 @@ const instructions = Platform.select({
 });
 
 const isIOS = Platform.OS === 'ios';
+const isWindows = Platform.OS === 'windows';
 console.log('App.tsx Platform.OS:', Platform.OS);
 
 type Props = {};
@@ -29,7 +37,6 @@ type State = {
   value3: boolean;
   value4: boolean;
   lineWidth: number;
-  multiplyResult: number | null;
 };
 
 export default class App extends Component<Props, State> {
@@ -43,23 +50,8 @@ export default class App extends Component<Props, State> {
       value3: false,
       value4: false,
       lineWidth: 10,
-      multiplyResult: null,
     };
   }
-
-  testMultiply = async () => {
-    if (NativeCheckboxModule) {
-      try {
-        const result = await NativeCheckboxModule.multiply(3, 7);
-        this.setState({ multiplyResult: result });
-        console.log('Multiply result:', result);
-      } catch (error) {
-        console.error('Multiply error:', error);
-      }
-    } else {
-      console.log('NativeCheckboxModule is not available');
-    }
-  };
 
   renderForIOS() {
     return (
@@ -166,62 +158,32 @@ export default class App extends Component<Props, State> {
     console.log('Rendering for Windows');
     return (
       <View style={styles.container}>
-        <Text style={styles.sectionTitle}>TurboModule Test</Text>
-        <Button
-          onPress={this.testMultiply}
-          title="Test multiply(3, 7)"
-        />
-        {this.state.multiplyResult !== null && (
-          <Text style={styles.result}>Result: {this.state.multiplyResult}</Text>
-        )}
-        
-        <Text style={styles.sectionTitle}>Checkbox Tests</Text>
-        
-        <Text>Disabled checkbox</Text>
-        <CheckBox value={true} disabled={true} />
-        <Text>{`[value: ${this.state.value0}]`}</Text>
-        <CheckBox
-          value={this.state.value0}
-          onValueChange={(value) =>
-            this.setState({
-              value0: value,
-            })
-          }
-        />
-        <Text>{`[value: ${this.state.value1}]`}</Text>
-        <CheckBox
-          tintColors={'green'}
-          onCheckColor={'red'}
-          onFillColor={'yellow'}
-          onTintColor={'#80F4E8'}
-          value={this.state.value1}
-          onValueChange={(value) =>
-            this.setState({
-              value1: value,
-            })
-          }
-        />
-        <Button
-          onPress={() =>
-            this.setState({
-              value1: !this.state.value1,
-            })
-          }
-          title="toggle the value above"
-        />
+        <ScrollView>
+          <Text style={styles.welcome}>Welcome to React Native Checkbox!</Text>
+          {CheckboxWindowsExamples.map((example, index) => {
+            const ExampleComponent = example.render;
+            return (
+              <View key={index} style={styles.exampleContainer}>
+                <Text style={styles.sectionTitle}>{example.title}</Text>
+                <Text style={styles.description}>{example.description}</Text>
+                <ExampleComponent />
+              </View>
+            );
+          })}
+        </ScrollView>
       </View>
     );
   }
 
   render() {
+    if (isWindows) {
+      return this.renderForWindows();
+    }
+    
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Welcome to React Native Checkbox!</Text>
-        {isIOS
-          ? this.renderForIOS()
-          : Platform.OS === 'windows'
-          ? this.renderForWindows()
-          : this.renderForAndroid()}
+        {isIOS ? this.renderForIOS() : this.renderForAndroid()}
         <Text style={styles.instructions}>{instructions}</Text>
       </View>
     );
@@ -253,6 +215,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginTop: 20,
+    marginBottom: 10,
+  },
+  exampleContainer: {
+    marginBottom: 20,
+    padding: 10,
+  },
+  description: {
+    fontSize: 14,
+    color: '#666',
     marginBottom: 10,
   },
   result: {
