@@ -14,6 +14,9 @@
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.WindowsSdk.Default.props" />
   <PropertyGroup>
     <WapProjPath Condition="'$(WapProjPath)'==''">$(MSBuildExtensionsPath)\Microsoft\DesktopBridge\</WapProjPath>
+    <PackageCertificateThumbprint>9DF94010C9064C546F931D4A5257FB4645FEABEF</PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>CheckboxExample.Package_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
   </PropertyGroup>
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.props" />
   <ItemGroup Label="ProjectConfigurations">
@@ -51,6 +54,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <None Include="CheckboxExample.Package_TemporaryKey.pfx" />
     <Content Include="Images\SplashScreen.scale-200.png" />
     <Content Include="Images\LockScreenLogo.scale-200.png" />
     <Content Include="Images\Square150x150Logo.scale-200.png" />
