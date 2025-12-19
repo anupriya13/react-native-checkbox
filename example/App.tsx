@@ -176,14 +176,14 @@ export default class App extends Component<Props, State> {
   }
 
   render() {
-    if (isWindows) {
-      return this.renderForWindows();
-    }
-    
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Welcome to React Native Checkbox!</Text>
-        {isIOS ? this.renderForIOS() : this.renderForAndroid()}
+         {isIOS
+          ? this.renderForIOS()
+          : Platform.OS === 'windows'
+          ? this.renderForWindows()
+          : this.renderForAndroid()}
         <Text style={styles.instructions}>{instructions}</Text>
       </View>
     );
