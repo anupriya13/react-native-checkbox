@@ -26,9 +26,6 @@ namespace winrt::Checkbox::implementation {
 
     struct RNCCheckboxComponentView : winrt::implements<RNCCheckboxComponentView, winrt::IInspectable>,
         CheckboxCodegen::BaseRNCCheckbox<RNCCheckboxComponentView> {
-        RNCCheckboxComponentView();
-        ~RNCCheckboxComponentView();
-
         void InitializeContentIsland(
             const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView& islandView);
 
@@ -51,8 +48,6 @@ namespace winrt::Checkbox::implementation {
         winrt::Microsoft::UI::Xaml::XamlIsland m_island{ nullptr };
         winrt::Microsoft::UI::Xaml::Controls::CheckBox m_checkBox{ nullptr };
         winrt::Microsoft::ReactNative::IComponentState m_state{ nullptr };
-        winrt::event_token m_checkedToken{};
-        winrt::event_token m_uncheckedToken{};
         bool m_updating{ false };
     };
 

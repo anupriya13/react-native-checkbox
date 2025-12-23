@@ -7,34 +7,6 @@
 
 namespace winrt::Checkbox::implementation {
 
-#ifdef RNW_NEW_ARCH
-
-    RNCCheckboxComponentView::RNCCheckboxComponentView() {
-        m_checkBox = winrt::Microsoft::UI::Xaml::Controls::CheckBox();
-        
-        // Subscribe to Checked/Unchecked events
-        m_checkedToken = m_checkBox.Checked([weakThis = get_weak()](auto const& sender, auto const& e) {
-            if (auto strongThis = weakThis.get()) {
-                strongThis->OnCheckedChanged(sender, e);
-            }
-        });
-        
-        m_uncheckedToken = m_checkBox.Unchecked([weakThis = get_weak()](auto const& sender, auto const& e) {
-            if (auto strongThis = weakThis.get()) {
-                strongThis->OnCheckedChanged(sender, e);
-            }
-        });
-    }
-
-    RNCCheckboxComponentView::~RNCCheckboxComponentView() {
-        if (m_checkBox) {
-            m_checkBox.Checked(m_checkedToken);
-            m_checkBox.Unchecked(m_uncheckedToken);
-        }
-    }
-
-#endif // RNW_NEW_ARCH
-
     void RegisterCheckboxComponentView(
         winrt::Microsoft::ReactNative::IReactPackageBuilder const& packageBuilder) noexcept {
 #ifdef RNW_NEW_ARCH
@@ -87,9 +59,23 @@ namespace winrt::Checkbox::implementation {
 #ifdef RNW_NEW_ARCH
     void RNCCheckboxComponentView::InitializeContentIsland(
         const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView& islandView) {
-        // Configure CheckBox
+        // Create CheckBox
+        m_checkBox = winrt::Microsoft::UI::Xaml::Controls::CheckBox();
         m_checkBox.HorizontalAlignment(winrt::Microsoft::UI::Xaml::HorizontalAlignment::Left);
         m_checkBox.VerticalAlignment(winrt::Microsoft::UI::Xaml::VerticalAlignment::Center);
+
+        // Subscribe to Checked/Unchecked events
+        m_checkBox.Checked([weakThis = get_weak()](auto const& sender, auto const& e) {
+            if (auto strongThis = weakThis.get()) {
+                strongThis->OnCheckedChanged(sender, e);
+            }
+        });
+        
+        m_checkBox.Unchecked([weakThis = get_weak()](auto const& sender, auto const& e) {
+            if (auto strongThis = weakThis.get()) {
+                strongThis->OnCheckedChanged(sender, e);
+            }
+        });
 
         // Listen for size changes on the checkbox
         m_checkBox.SizeChanged([this](auto const& /*sender*/, auto const& /*args*/) {
