@@ -10,47 +10,42 @@
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
-#include <winrt/Microsoft.UI.Xaml.Controls.Primitives.h>
 #include <winrt/Microsoft.UI.Xaml.h>
-#include <mutex>
 
 namespace winrt::Checkbox::implementation {
 
-    // State to store the measured size
-    struct RNCCheckboxStateData : winrt::implements<RNCCheckboxStateData, winrt::IInspectable> {
-        RNCCheckboxStateData(winrt::Windows::Foundation::Size ds) : desiredSize(ds) {}
-        winrt::Windows::Foundation::Size desiredSize;
-    };
+// State to store the measured size
+struct RNCCheckboxStateData : winrt::implements<RNCCheckboxStateData, winrt::IInspectable> {
+    RNCCheckboxStateData(winrt::Windows::Foundation::Size ds) : desiredSize(ds) {}
+    winrt::Windows::Foundation::Size desiredSize;
+};
 
-    struct RNCCheckboxComponentView : winrt::implements<RNCCheckboxComponentView, winrt::IInspectable>,
-        CheckboxCodegen::BaseRNCCheckbox<RNCCheckboxComponentView> {
-        void InitializeContentIsland(
-            const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView& islandView);
+struct RNCCheckboxComponentView : winrt::implements<RNCCheckboxComponentView, winrt::IInspectable>,
+    CheckboxCodegen::BaseRNCCheckbox<RNCCheckboxComponentView> {
+    void InitializeContentIsland(
+        const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView& islandView);
 
-        void UpdateProps(
-            const winrt::Microsoft::ReactNative::ComponentView& view,
-            const winrt::com_ptr<CheckboxCodegen::RNCCheckboxProps>& newProps,
-            const winrt::com_ptr<CheckboxCodegen::RNCCheckboxProps>& oldProps) noexcept override;
+    void UpdateProps(
+        const winrt::Microsoft::ReactNative::ComponentView& view,
+        const winrt::com_ptr<CheckboxCodegen::RNCCheckboxProps>& newProps,
+        const winrt::com_ptr<CheckboxCodegen::RNCCheckboxProps>& oldProps) noexcept override;
 
-        void UpdateState(
-            const winrt::Microsoft::ReactNative::ComponentView& view,
-            const winrt::Microsoft::ReactNative::IComponentState& newState) noexcept override;
+    void UpdateState(
+        const winrt::Microsoft::ReactNative::ComponentView& view,
+        const winrt::Microsoft::ReactNative::IComponentState& newState) noexcept override;
 
-    private:
-        void RefreshSize();
-        void OnCheckedChanged(
-            winrt::Windows::Foundation::IInspectable const& sender,
-            winrt::Microsoft::UI::Xaml::RoutedEventArgs const& e);
+private:
+    void RefreshSize();
+    void OnCheckedChanged();
 
-        winrt::weak_ref<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView> m_islandView;
-        winrt::Microsoft::UI::Xaml::XamlIsland m_island{ nullptr };
-        winrt::Microsoft::UI::Xaml::Controls::CheckBox m_checkBox{ nullptr };
-        winrt::Microsoft::ReactNative::IComponentState m_state{ nullptr };
-        bool m_updating{ false };
-    };
+    winrt::weak_ref<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView> m_islandView;
+    winrt::Microsoft::UI::Xaml::XamlIsland m_island{ nullptr };
+    winrt::Microsoft::UI::Xaml::Controls::CheckBox m_checkBox{ nullptr };
+    winrt::Microsoft::ReactNative::IComponentState m_state{ nullptr };
+};
 
-    void RegisterCheckboxComponentView(
-        winrt::Microsoft::ReactNative::IReactPackageBuilder const& packageBuilder) noexcept;
+void RegisterCheckboxComponentView(
+    winrt::Microsoft::ReactNative::IReactPackageBuilder const& packageBuilder) noexcept;
 
 } // namespace winrt::Checkbox::implementation
 

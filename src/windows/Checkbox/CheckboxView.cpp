@@ -62,20 +62,16 @@ namespace winrt::Checkbox::implementation {
         m_checkBox.VerticalAlignment(winrt::Microsoft::UI::Xaml::VerticalAlignment::Center);
 
         // Subscribe to Checked/Unchecked events
-        m_checkBox.Checked([weakThis = get_weak()](auto const& sender, auto const& e) {
-            if (auto strongThis = weakThis.get()) {
-                strongThis->OnCheckedChanged(sender, e);
-            }
+        m_checkBox.Checked([this](auto const&, auto const&) {
+            OnCheckedChanged();
         });
         
-        m_checkBox.Unchecked([weakThis = get_weak()](auto const& sender, auto const& e) {
-            if (auto strongThis = weakThis.get()) {
-                strongThis->OnCheckedChanged(sender, e);
-            }
+        m_checkBox.Unchecked([this](auto const&, auto const&) {
+            OnCheckedChanged();
         });
 
         // Listen for size changes on the checkbox
-        m_checkBox.SizeChanged([this](auto const& /*sender*/, auto const& /*args*/) {
+        m_checkBox.SizeChanged([this](auto const&, auto const&) {
             RefreshSize();
         });
 
@@ -95,8 +91,6 @@ namespace winrt::Checkbox::implementation {
             return;
         }
 
-        m_updating = true;
-
         // Update value (checked state)
         if (newProps->value.has_value()) {
             m_checkBox.IsChecked(newProps->value.value());
@@ -107,7 +101,39 @@ namespace winrt::Checkbox::implementation {
             m_checkBox.IsEnabled(!newProps->disabled.value());
         }
 
-        m_updating = false;
+        auto resDict = m_checkBox.Resources();
+
+        // onCheckColor - color of the check mark when checked
+        if (newProps->onCheckColor) {
+            auto brush = newProps->onCheckColor.AsWindowsBrush();
+            resDict.Insert(winrt::box_value(L"CheckBoxCheckGlyphForegroundChecked"), brush);
+            resDict.Insert(winrt::box_value(L"CheckBoxCheckGlyphForegroundCheckedPointerOver"), brush);
+            resDict.Insert(winrt::box_value(L"CheckBoxCheckGlyphForegroundCheckedPressed"), brush);
+        }
+
+        // onTintColor - color of the border when checked
+        if (newProps->onTintColor) {
+            auto brush = newProps->onTintColor.AsWindowsBrush();
+            resDict.Insert(winrt::box_value(L"CheckBoxCheckBackgroundStrokeChecked"), brush);
+            resDict.Insert(winrt::box_value(L"CheckBoxCheckBackgroundStrokeCheckedPointerOver"), brush);
+            resDict.Insert(winrt::box_value(L"CheckBoxCheckBackgroundStrokeCheckedPressed"), brush);
+        }
+
+        // onFillColor - fill color of the box when checked
+        if (newProps->onFillColor) {
+            auto brush = newProps->onFillColor.AsWindowsBrush();
+            resDict.Insert(winrt::box_value(L"CheckBoxCheckBackgroundFillChecked"), brush);
+            resDict.Insert(winrt::box_value(L"CheckBoxCheckBackgroundFillCheckedPointerOver"), brush);
+            resDict.Insert(winrt::box_value(L"CheckBoxCheckBackgroundFillCheckedPressed"), brush);
+        }
+
+        // tintColor - color of the box when unchecked
+        if (newProps->tintColor) {
+            auto brush = newProps->tintColor.AsWindowsBrush();
+            resDict.Insert(winrt::box_value(L"CheckBoxCheckBackgroundFillUnchecked"), brush);
+            resDict.Insert(winrt::box_value(L"CheckBoxCheckBackgroundFillUncheckedPointerOver"), brush);
+            resDict.Insert(winrt::box_value(L"CheckBoxCheckBackgroundFillUncheckedPressed"), brush);
+        }
 
         RefreshSize();
     }
@@ -141,14 +167,7 @@ namespace winrt::Checkbox::implementation {
         m_state = newState;
     }
 
-    void RNCCheckboxComponentView::OnCheckedChanged(
-        winrt::Windows::Foundation::IInspectable const& /*sender*/,
-        winrt::Microsoft::UI::Xaml::RoutedEventArgs const& /*e*/) {
-        
-        if (m_updating) {
-            return;
-        }
-
+    void RNCCheckboxComponentView::OnCheckedChanged() {
         if (auto eventEmitter = EventEmitter()) {
             CheckboxCodegen::RNCCheckboxEventEmitter::OnChange args;
             args.value = m_checkBox.IsChecked().GetBoolean();

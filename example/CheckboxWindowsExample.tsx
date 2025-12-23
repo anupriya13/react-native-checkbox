@@ -154,6 +154,58 @@ function ControlledToggleExample() {
   );
 }
 
+// Example 5: Custom Colors
+function CustomColorsExample() {
+  const [checked, setChecked] = React.useState(true);
+
+  return (
+    <ExampleCard>
+      <Text style={styles.description}>
+        Checkbox with custom colors (tintColor, onCheckColor, onFillColor, onTintColor)
+      </Text>
+      <View style={styles.checkboxRow}>
+        <RNCCheckbox
+          value={checked}
+          onChange={(e: {nativeEvent: {value: boolean}}) => setChecked(e.nativeEvent.value)}
+          tintColor="#888888"
+          onCheckColor="#ffffff"
+          onFillColor="#0078d4"
+          onTintColor="#005a9e"
+          style={styles.checkbox}
+        />
+        <Text style={styles.checkboxLabel}>Blue theme</Text>
+      </View>
+      <View style={styles.checkboxRow}>
+        <RNCCheckbox
+          value={checked}
+          onChange={(e: {nativeEvent: {value: boolean}}) => setChecked(e.nativeEvent.value)}
+          tintColor="#cccccc"
+          onCheckColor="#ffffff"
+          onFillColor="#107c10"
+          onTintColor="#0b5c0b"
+          style={styles.checkbox}
+        />
+        <Text style={styles.checkboxLabel}>Green theme</Text>
+      </View>
+      <View style={styles.checkboxRow}>
+        <RNCCheckbox
+          value={checked}
+          onChange={(e: {nativeEvent: {value: boolean}}) => setChecked(e.nativeEvent.value)}
+          tintColor="#e0e0e0"
+          onCheckColor="#000000"
+          onFillColor="#ffb900"
+          onTintColor="#d39e00"
+          style={styles.checkbox}
+        />
+        <Text style={styles.checkboxLabel}>Yellow theme</Text>
+      </View>
+      <View style={styles.buttonRow}>
+        <Button title="Toggle All" onPress={() => setChecked(prev => !prev)} />
+      </View>
+    </ExampleCard>
+  );
+}
+
 const styles = StyleSheet.create({
   card: {
     backgroundColor: '#ffffff',
@@ -228,5 +280,9 @@ export const examples = [
   {
     title: 'Controlled Toggle',
     render: ControlledToggleExample,
+  },
+  {
+    title: 'Custom Colors',
+    render: CustomColorsExample,
   },
 ];
