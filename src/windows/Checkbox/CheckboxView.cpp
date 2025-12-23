@@ -102,10 +102,11 @@ namespace winrt::Checkbox::implementation {
         }
 
         auto resDict = m_checkBox.Resources();
+        auto theme = view.as<winrt::Microsoft::ReactNative::Composition::ComponentView>().Theme();
 
         // onCheckColor - color of the check mark when checked
         if (newProps->onCheckColor) {
-            auto brush = newProps->onCheckColor.AsWindowsBrush();
+            auto brush = winrt::Microsoft::UI::Xaml::Media::SolidColorBrush(newProps->onCheckColor.AsWindowsColor(theme));
             resDict.Insert(winrt::box_value(L"CheckBoxCheckGlyphForegroundChecked"), brush);
             resDict.Insert(winrt::box_value(L"CheckBoxCheckGlyphForegroundCheckedPointerOver"), brush);
             resDict.Insert(winrt::box_value(L"CheckBoxCheckGlyphForegroundCheckedPressed"), brush);
@@ -113,7 +114,7 @@ namespace winrt::Checkbox::implementation {
 
         // onTintColor - color of the border when checked
         if (newProps->onTintColor) {
-            auto brush = newProps->onTintColor.AsWindowsBrush();
+            auto brush = winrt::Microsoft::UI::Xaml::Media::SolidColorBrush(newProps->onTintColor.AsWindowsColor(theme));
             resDict.Insert(winrt::box_value(L"CheckBoxCheckBackgroundStrokeChecked"), brush);
             resDict.Insert(winrt::box_value(L"CheckBoxCheckBackgroundStrokeCheckedPointerOver"), brush);
             resDict.Insert(winrt::box_value(L"CheckBoxCheckBackgroundStrokeCheckedPressed"), brush);
@@ -121,7 +122,7 @@ namespace winrt::Checkbox::implementation {
 
         // onFillColor - fill color of the box when checked
         if (newProps->onFillColor) {
-            auto brush = newProps->onFillColor.AsWindowsBrush();
+            auto brush = winrt::Microsoft::UI::Xaml::Media::SolidColorBrush(newProps->onFillColor.AsWindowsColor(theme));
             resDict.Insert(winrt::box_value(L"CheckBoxCheckBackgroundFillChecked"), brush);
             resDict.Insert(winrt::box_value(L"CheckBoxCheckBackgroundFillCheckedPointerOver"), brush);
             resDict.Insert(winrt::box_value(L"CheckBoxCheckBackgroundFillCheckedPressed"), brush);
@@ -129,7 +130,7 @@ namespace winrt::Checkbox::implementation {
 
         // tintColor - color of the box when unchecked
         if (newProps->tintColor) {
-            auto brush = newProps->tintColor.AsWindowsBrush();
+            auto brush = winrt::Microsoft::UI::Xaml::Media::SolidColorBrush(newProps->tintColor.AsWindowsColor(theme));
             resDict.Insert(winrt::box_value(L"CheckBoxCheckBackgroundFillUnchecked"), brush);
             resDict.Insert(winrt::box_value(L"CheckBoxCheckBackgroundFillUncheckedPointerOver"), brush);
             resDict.Insert(winrt::box_value(L"CheckBoxCheckBackgroundFillUncheckedPressed"), brush);
