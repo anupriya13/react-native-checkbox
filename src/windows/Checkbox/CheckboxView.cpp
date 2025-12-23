@@ -9,7 +9,6 @@ namespace winrt::Checkbox::implementation {
 
     void RegisterCheckboxComponentView(
         winrt::Microsoft::ReactNative::IReactPackageBuilder const& packageBuilder) noexcept {
-#ifdef RNW_NEW_ARCH
         CheckboxCodegen::RegisterRNCCheckboxNativeComponent<winrt::Checkbox::implementation::RNCCheckboxComponentView>(
             packageBuilder,
             [](const winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder& builder) {
@@ -53,10 +52,8 @@ namespace winrt::Checkbox::implementation {
                             userData->UpdateState(view, newState);
                     });
             });
-#endif
     }
 
-#ifdef RNW_NEW_ARCH
     void RNCCheckboxComponentView::InitializeContentIsland(
         const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView& islandView) {
         // Create CheckBox
@@ -158,7 +155,5 @@ namespace winrt::Checkbox::implementation {
             eventEmitter->onChange(args);
         }
     }
-
-#endif // defined(RNW_NEW_ARCH)
 
 } // namespace winrt::Checkbox::implementation

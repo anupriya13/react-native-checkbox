@@ -28,10 +28,6 @@
 #include <winrt/Microsoft.UI.Xaml.Media.h>
 #include <winrt/Microsoft.UI.Xaml.Hosting.h>
 #include <winrt/Microsoft.UI.Content.h>
-#ifdef RNW_NEW_ARCH
-// RNW new-arch specific headers are included in translation units that need
-// them and are guarded with __has_include checks in those files.
-#endif
 #include <winrt/Windows.UI.h>
 
 // Composition and Numerics

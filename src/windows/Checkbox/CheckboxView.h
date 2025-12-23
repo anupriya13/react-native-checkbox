@@ -5,8 +5,6 @@
 
 #include "pch.h"
 
-#ifdef RNW_NEW_ARCH
-
 #include "codegen_manual/react/components/RNCCheckboxSpec/RNCCheckbox.g.h"
 
 #include <winrt/Microsoft.ReactNative.h>
@@ -56,7 +54,6 @@ namespace winrt::Checkbox::implementation {
 
 } // namespace winrt::Checkbox::implementation
 
-#endif // RNW_NEW_ARCH
 
 
 

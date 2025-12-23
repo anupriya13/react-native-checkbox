@@ -16,11 +16,15 @@
 namespace CheckboxCodegen {
 
 struct CheckboxModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
-  static constexpr auto methods = std::tuple{};
+  static constexpr auto methods = std::tuple{
+
+  };
 
   template <class TModule>
   static constexpr void ValidateModule() noexcept {
     constexpr auto methodCheckResults = CheckMethods<TModule, CheckboxModuleSpec>();
+
+
   }
 };
 
