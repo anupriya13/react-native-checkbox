@@ -16,19 +16,11 @@
 namespace CheckboxCodegen {
 
 struct CheckboxModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
-  static constexpr auto methods = std::tuple{
-      Method<void(double, double, Promise<double>) noexcept>{0, L"multiply"},
-  };
+  static constexpr auto methods = std::tuple{};
 
   template <class TModule>
   static constexpr void ValidateModule() noexcept {
     constexpr auto methodCheckResults = CheckMethods<TModule, CheckboxModuleSpec>();
-
-    REACT_SHOW_METHOD_SPEC_ERRORS(
-          0,
-          "multiply",
-          "    REACT_METHOD(multiply) void multiply(double a, double b, ::React::ReactPromise<double> &&result) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(multiply) static void multiply(double a, double b, ::React::ReactPromise<double> &&result) noexcept { /* implementation */ }\n");
   }
 };
 

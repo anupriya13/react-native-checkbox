@@ -16,9 +16,6 @@ struct CheckboxModule {
   REACT_INIT(Initialize)
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
-  REACT_METHOD(multiply, L"multiply")
-  void multiply(double a, double b, winrt::Microsoft::ReactNative::ReactPromise<double> promise) noexcept;
-
  private:
   winrt::Microsoft::ReactNative::ReactContext m_reactContext{nullptr};
 };

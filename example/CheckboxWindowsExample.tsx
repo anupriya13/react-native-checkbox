@@ -3,7 +3,6 @@ import {View, Text, Button, StyleSheet} from 'react-native';
 // Use relative import for workspace linking
 import {
   RNCCheckbox,
-  multiply,
   type RNCCheckboxNativeProps,
 } from '../src/specs';
 
@@ -116,39 +115,7 @@ function MultipleCheckboxExample() {
   );
 }
 
-// Example 4: TurboModule Test
-function TurboModuleTestExample() {
-  const [result, setResult] = React.useState<number | null>(null);
-  const [a, setA] = React.useState(3);
-  const [b, setB] = React.useState(7);
-
-  const handleMultiply = async () => {
-    try {
-      const res = await multiply(a, b);
-      setResult(res);
-      console.log('Multiply result:', res);
-    } catch (error) {
-      console.error('Error calling multiply:', error);
-    }
-  };
-
-  return (
-    <ExampleCard>
-      <Text style={styles.description}>
-        Test TurboModule: multiply({a}, {b})
-      </Text>
-      <View style={styles.calculatorRow}>
-        <Text style={styles.calcText}>{a} × {b} = </Text>
-        <View style={styles.resultDisplay}>
-          <Text style={styles.resultNumber}>{result ?? '?'}</Text>
-        </View>
-      </View>
-      <Button title="Calculate" onPress={handleMultiply} />
-    </ExampleCard>
-  );
-}
-
-// Example 5: Controlled Toggle
+// Example 4: Controlled Toggle
 function ControlledToggleExample() {
   const [checked, setChecked] = React.useState(false);
 
@@ -238,31 +205,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#0078d4',
   },
-  calculatorRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 16,
-  },
-  calcText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-    marginRight: 8,
-  },
-  resultDisplay: {
-    backgroundColor: '#0078d4',
-    paddingHorizontal: 16,
-    paddingVertical: 6,
-    borderRadius: 2,
-    minWidth: 50,
-    alignItems: 'center',
-  },
-  resultNumber: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#fff',
-  },
   buttonRow: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -286,9 +228,5 @@ export const examples = [
   {
     title: 'Controlled Toggle',
     render: ControlledToggleExample,
-  },
-  {
-    title: 'TurboModule: multiply()',
-    render: TurboModuleTestExample,
   },
 ];

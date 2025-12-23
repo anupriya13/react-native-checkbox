@@ -13,10 +13,6 @@ void CheckboxModule::Initialize(ReactContext const &reactContext) noexcept {
   m_reactContext = reactContext;
 }
 
-void CheckboxModule::multiply(double a, double b, ReactPromise<double> promise) noexcept {
-  promise.Resolve(a * b);
-}
-
 void RegisterCheckboxNativeModule(IReactPackageBuilder const &packageBuilder) noexcept {
   AddAttributedModules(packageBuilder, true);
 }
