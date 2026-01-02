@@ -42,6 +42,11 @@ private:
     winrt::Microsoft::UI::Xaml::XamlIsland m_island{ nullptr };
     winrt::Microsoft::UI::Xaml::Controls::CheckBox m_checkBox{ nullptr };
     winrt::Microsoft::ReactNative::IComponentState m_state{ nullptr };
+
+    // Auto-revokers for event subscriptions
+    winrt::Microsoft::UI::Xaml::Controls::CheckBox::Checked_revoker m_checkedRevoker;
+    winrt::Microsoft::UI::Xaml::Controls::CheckBox::Unchecked_revoker m_uncheckedRevoker;
+    winrt::Microsoft::UI::Xaml::FrameworkElement::SizeChanged_revoker m_sizeChangedRevoker;
 };
 
 void RegisterCheckboxComponentView(

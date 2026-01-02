@@ -61,17 +61,17 @@ namespace winrt::Checkbox::implementation {
         m_checkBox.HorizontalAlignment(winrt::Microsoft::UI::Xaml::HorizontalAlignment::Left);
         m_checkBox.VerticalAlignment(winrt::Microsoft::UI::Xaml::VerticalAlignment::Center);
 
-        // Subscribe to Checked/Unchecked events
-        m_checkBox.Checked([this](auto const&, auto const&) {
+        // Subscribe to Checked/Unchecked events with auto-revokers
+        m_checkedRevoker = m_checkBox.Checked(winrt::auto_revoke, [this](auto const&, auto const&) {
             OnCheckedChanged();
         });
         
-        m_checkBox.Unchecked([this](auto const&, auto const&) {
+        m_uncheckedRevoker = m_checkBox.Unchecked(winrt::auto_revoke, [this](auto const&, auto const&) {
             OnCheckedChanged();
         });
 
-        // Listen for size changes on the checkbox
-        m_checkBox.SizeChanged([this](auto const&, auto const&) {
+        // Listen for size changes on the checkbox with auto-revoker
+        m_sizeChangedRevoker = m_checkBox.SizeChanged(winrt::auto_revoke, [this](auto const&, auto const&) {
             RefreshSize();
         });
 
