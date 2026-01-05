@@ -16,6 +16,8 @@ let CheckboxNativeComponent: HostComponent<any>;
 
 if (Platform.OS === 'android') {
   CheckboxNativeComponent = require('./AndroidCheckBoxNativeComponent').default;
+} else if (Platform.OS === 'windows') {
+  CheckboxNativeComponent = require('./RNCCheckboxNativeComponent').default;
 } else {
   CheckboxNativeComponent = require('./IOSCheckBoxNativeComponent').default;
 }

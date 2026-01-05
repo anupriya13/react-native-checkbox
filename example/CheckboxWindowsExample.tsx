@@ -4,7 +4,7 @@ import {View, Text, Button, StyleSheet} from 'react-native';
 import {
   RNCCheckbox,
   type RNCCheckboxNativeProps,
-} from '../src/specs';
+} from '../src/js';
 
 // Reusable Card component for examples
 function ExampleCard({children}: {children: React.ReactNode}) {

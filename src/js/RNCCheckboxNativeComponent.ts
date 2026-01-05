@@ -58,4 +58,3 @@ export interface RNCCheckboxNativeProps extends ViewProps {
 }
 
 export default codegenNativeComponent<RNCCheckboxNativeProps>('RNCCheckbox') as HostComponent<RNCCheckboxNativeProps>;
-

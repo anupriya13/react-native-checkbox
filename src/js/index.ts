@@ -5,7 +5,10 @@
  * @format
  */
 
-// Export the native component and its types
+// Re-export everything from CheckBox.ts
+export * from './CheckBox';
+
+// Export the native component and its types (for Windows/New Architecture)
 export {default as RNCCheckbox} from './RNCCheckboxNativeComponent';
 export type {RNCCheckboxNativeProps} from './RNCCheckboxNativeComponent';
 
