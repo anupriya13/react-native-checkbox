@@ -136,6 +136,13 @@ namespace winrt::Checkbox::implementation {
             resDict.Insert(winrt::box_value(L"CheckBoxCheckBackgroundFillUncheckedPressed"), brush);
         }
 
+        // label - text content next to the checkbox
+        if (!newProps->label.empty()) {
+            m_checkBox.Content(winrt::box_value(winrt::to_hstring(newProps->label)));
+        } else {
+            m_checkBox.Content(nullptr);
+        }
+
         RefreshSize();
     }
 

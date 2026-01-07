@@ -22,16 +22,11 @@ function BasicCheckboxExample() {
   return (
     <ExampleCard>
       <Text style={styles.description}>Basic checkbox with state</Text>
-      <View style={styles.checkboxRow}>
-        <RNCCheckbox
-          value={checked}
-          onChange={handleChange}
-          style={styles.checkbox}
-        />
-        <Text style={styles.checkboxLabel}>
-          {checked ? 'Checked ✓' : 'Unchecked'}
-        </Text>
-      </View>
+      <RNCCheckbox
+        value={checked}
+        onChange={handleChange}
+        label={checked ? 'Checked ✓' : 'Unchecked'}
+      />
     </ExampleCard>
   );
 }
@@ -43,22 +38,16 @@ function DisabledCheckboxExample() {
       <Text style={styles.description}>
         Disabled checkboxes - user cannot interact
       </Text>
-      <View style={styles.checkboxRow}>
-        <RNCCheckbox
-          value={true}
-          disabled={true}
-          style={styles.checkbox}
-        />
-        <Text style={styles.checkboxLabel}>Checked & Disabled</Text>
-      </View>
-      <View style={styles.checkboxRow}>
-        <RNCCheckbox
-          value={false}
-          disabled={true}
-          style={styles.checkbox}
-        />
-        <Text style={styles.checkboxLabel}>Unchecked & Disabled</Text>
-      </View>
+      <RNCCheckbox
+        value={true}
+        disabled={true}
+        label="Checked & Disabled"
+      />
+      <RNCCheckbox
+        value={false}
+        disabled={true}
+        label="Unchecked & Disabled"
+      />
     </ExampleCard>
   );
 }
@@ -78,30 +67,21 @@ function MultipleCheckboxExample() {
   return (
     <ExampleCard>
       <Text style={styles.description}>Multiple checkboxes in a form</Text>
-      <View style={styles.checkboxRow}>
-        <RNCCheckbox
-          value={options.option1}
-          onChange={() => toggleOption('option1')}
-          style={styles.checkbox}
-        />
-        <Text style={styles.checkboxLabel}>Option 1</Text>
-      </View>
-      <View style={styles.checkboxRow}>
-        <RNCCheckbox
-          value={options.option2}
-          onChange={() => toggleOption('option2')}
-          style={styles.checkbox}
-        />
-        <Text style={styles.checkboxLabel}>Option 2</Text>
-      </View>
-      <View style={styles.checkboxRow}>
-        <RNCCheckbox
-          value={options.option3}
-          onChange={() => toggleOption('option3')}
-          style={styles.checkbox}
-        />
-        <Text style={styles.checkboxLabel}>Option 3</Text>
-      </View>
+      <RNCCheckbox
+        value={options.option1}
+        onChange={() => toggleOption('option1')}
+        label="Option 1"
+      />
+      <RNCCheckbox
+        value={options.option2}
+        onChange={() => toggleOption('option2')}
+        label="Option 2"
+      />
+      <RNCCheckbox
+        value={options.option3}
+        onChange={() => toggleOption('option3')}
+        label="Option 3"
+      />
       <View style={styles.resultBox}>
         <Text style={styles.resultLabel}>Selected:</Text>
         <Text style={styles.resultValue}>
@@ -124,16 +104,11 @@ function ControlledToggleExample() {
       <Text style={styles.description}>
         Controlled checkbox with external toggle button
       </Text>
-      <View style={styles.checkboxRow}>
-        <RNCCheckbox
-          value={checked}
-          onChange={(e: {nativeEvent: {value: boolean}}) => setChecked(e.nativeEvent.value)}
-          style={styles.checkbox}
-        />
-        <Text style={styles.checkboxLabel}>
-          Value: {checked ? 'true' : 'false'}
-        </Text>
-      </View>
+      <RNCCheckbox
+        value={checked}
+        onChange={(e: {nativeEvent: {value: boolean}}) => setChecked(e.nativeEvent.value)}
+        label={`Value: ${checked ? 'true' : 'false'}`}
+      />
       <View style={styles.buttonRow}>
         <Button
           title="Toggle"
@@ -163,42 +138,33 @@ function CustomColorsExample() {
       <Text style={styles.description}>
         Checkbox with custom colors (tintColor, onCheckColor, onFillColor, onTintColor)
       </Text>
-      <View style={styles.checkboxRow}>
-        <RNCCheckbox
-          value={checked}
-          onChange={(e: {nativeEvent: {value: boolean}}) => setChecked(e.nativeEvent.value)}
-          tintColor="#888888"
-          onCheckColor="#ffffff"
-          onFillColor="#0078d4"
-          onTintColor="#005a9e"
-          style={styles.checkbox}
-        />
-        <Text style={styles.checkboxLabel}>Blue theme</Text>
-      </View>
-      <View style={styles.checkboxRow}>
-        <RNCCheckbox
-          value={checked}
-          onChange={(e: {nativeEvent: {value: boolean}}) => setChecked(e.nativeEvent.value)}
-          tintColor="#cccccc"
-          onCheckColor="#ffffff"
-          onFillColor="#107c10"
-          onTintColor="#0b5c0b"
-          style={styles.checkbox}
-        />
-        <Text style={styles.checkboxLabel}>Green theme</Text>
-      </View>
-      <View style={styles.checkboxRow}>
-        <RNCCheckbox
-          value={checked}
-          onChange={(e: {nativeEvent: {value: boolean}}) => setChecked(e.nativeEvent.value)}
-          tintColor="#e0e0e0"
-          onCheckColor="#000000"
-          onFillColor="#ffb900"
-          onTintColor="#d39e00"
-          style={styles.checkbox}
-        />
-        <Text style={styles.checkboxLabel}>Yellow theme</Text>
-      </View>
+      <RNCCheckbox
+        value={checked}
+        onChange={(e: {nativeEvent: {value: boolean}}) => setChecked(e.nativeEvent.value)}
+        tintColor="#888888"
+        onCheckColor="#ffffff"
+        onFillColor="#0078d4"
+        onTintColor="#005a9e"
+        label="Blue theme"
+      />
+      <RNCCheckbox
+        value={checked}
+        onChange={(e: {nativeEvent: {value: boolean}}) => setChecked(e.nativeEvent.value)}
+        tintColor="#cccccc"
+        onCheckColor="#ffffff"
+        onFillColor="#107c10"
+        onTintColor="#0b5c0b"
+        label="Green theme"
+      />
+      <RNCCheckbox
+        value={checked}
+        onChange={(e: {nativeEvent: {value: boolean}}) => setChecked(e.nativeEvent.value)}
+        tintColor="#e0e0e0"
+        onCheckColor="#000000"
+        onFillColor="#ffb900"
+        onTintColor="#d39e00"
+        label="Yellow theme"
+      />
       <View style={styles.buttonRow}>
         <Button title="Toggle All" onPress={() => setChecked(prev => !prev)} />
       </View>
@@ -219,25 +185,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: '#666',
     marginBottom: 12,
-  },
-  checkboxContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  checkbox: {
-    width: 20,
-    height: 20,
-  },
-  checkboxRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  checkboxLabel: {
-    fontSize: 14,
-    paddingBottom: 8,
-    marginLeft: 8,
-    color: '#333',
   },
   resultBox: {
     flexDirection: 'row',

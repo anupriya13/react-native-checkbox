@@ -25,7 +25,8 @@ struct RNCCheckboxProps : winrt::implements<RNCCheckboxProps, winrt::Microsoft::
        tintColor = cloneFromProps->tintColor;
        onCheckColor = cloneFromProps->onCheckColor;
        onTintColor = cloneFromProps->onTintColor;
-       onFillColor = cloneFromProps->onFillColor;  
+       onFillColor = cloneFromProps->onFillColor;
+       label = cloneFromProps->label;
      }
   }
 
@@ -50,6 +51,9 @@ struct RNCCheckboxProps : winrt::implements<RNCCheckboxProps, winrt::Microsoft::
 
   REACT_FIELD(onFillColor)
   winrt::Microsoft::ReactNative::Color onFillColor{nullptr};
+
+  REACT_FIELD(label)
+  std::string label{};
 
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };

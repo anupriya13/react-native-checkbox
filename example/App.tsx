@@ -27,7 +27,6 @@ const instructions = Platform.select({
 
 const isIOS = Platform.OS === 'ios';
 const isWindows = Platform.OS === 'windows';
-console.log('App.tsx Platform.OS:', Platform.OS);
 
 type Props = {};
 type State = {
@@ -155,7 +154,6 @@ export default class App extends Component<Props, State> {
   }
 
   renderForWindows() {
-    console.log('Rendering for Windows');
     return (
       <View style={styles.container}>
         <ScrollView>

@@ -52,6 +52,11 @@ export interface RNCCheckboxNativeProps extends ViewProps {
   onFillColor?: ColorValue;
 
   /**
+   * The label to display next to the checkbox.
+   */
+  label?: string;
+
+  /**
    * Called when the checkbox value changes.
    */
   onChange?: BubblingEventHandler<CheckBoxChangeEvent>;
