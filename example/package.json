@@ -14,7 +14,7 @@
   "dependencies": {
     "react": "19.0.0",
     "react-native": "0.82.0",
-    "react-native-windows": "0.0.0-canary.1020",
+    "react-native-windows": "0.82.3",
     "@react-native-community/checkbox": "file:../src"
   },
   "devDependencies": {

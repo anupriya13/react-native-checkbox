@@ -36,7 +36,7 @@
     "prettier": "^3.2.5",
     "react": "19.0.0",
     "react-native": "0.82.0",
-    "react-native-windows": "0.0.0-canary.1020",
+    "react-native-windows": "0.82.3",
     "react-test-renderer": "19.0.0",
     "ts-jest": "^29.2.5",
     "typescript": "^5.7.0",
